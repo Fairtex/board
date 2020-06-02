@@ -1,18 +1,23 @@
 import React from 'react';
+import InputGroup from '../input-group';
+import CardList from '../card-list';
 import './column.css';
 
 export default class Column extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      cards: [
-        {name: "Simple card", id: 1}
-      ]
+      cards: [{value: "Example", id: 1}]
     }
 
-    this.addCard = () => {
-      console.log(this.textInput.value)
+    this.addCard = (e) => {
+      e.preventDefault();
+      let newCards = this.state.cards;
+      newCards.push({value: "Another one card", id: 4});
+      this.setState(state => ({
+        cards: newCards
+      }));
     }
   }
 
@@ -20,10 +25,8 @@ export default class Column extends React.Component {
     return (
       <div className="column col">
         <h3 className="column__title">{this.props.name}</h3>
-        <ul className="list-group">
-
-        </ul>
-        <button className="btn btn-light">Add card</button>
+        <CardList cards={this.state.cards} />
+        <InputGroup groupType="input" groupClass="input-group" inputType="text" inputClass="form-control" inputPlaceholder="Add card..." btnClass="btn-light" btnContent="+" onSubmit={this.addCard}/>
       </div>
     );
   }

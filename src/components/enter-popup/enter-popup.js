@@ -1,17 +1,23 @@
 import React from 'react';
+import InputGroup from '../input-group';
 import './enter-popup.css';
 
 export default class EnterPopup extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      registered: true
+      isRegistered: true
+    }
+
+    this.register = (e) => {
+      e.preventDefault();
+      console.log('Hooray! You registered')
     }
   }
 
   render() {
-    if (this.state.registered) {
+    if (this.state.isRegistered) {
       return null
     }
     return (
@@ -22,10 +28,7 @@ export default class EnterPopup extends React.Component {
               <h1 className="modal-title">Kanban board</h1>
               <button className="close">&times;</button>
             </div>
-            <form className="modal-body">
-              <input type="text" placeholder="Username" className="username-input"/>
-              <button type="submit" className="btn btn-primary">Sign in</button>
-            </form>
+            <InputGroup groupType="input" groupClass="modal-body" inputType="text" inputClass="username-input" inputPlaceholder="Username" btnClass="btn-primary" btnContent="Sign in" onSubmit={this.register}/>
           </div>
         </div>
       </div>
