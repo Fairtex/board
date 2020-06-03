@@ -35,7 +35,7 @@ export default class Card extends React.Component {
       <div className="card" onClick={() => this.openPopup()}>
         {this.props.cardContent}
         {this.state.isOpened 
-          ? <CardPopup comments={this.state.comments} cardName={this.props.cardContent} cardAuthor={localStorage.getItem('user')} description={this.state.description} clickHandler={(e) => this.closePopup(e)}/> 
+          ? <CardPopup comments={this.state.comments} cardName={this.props.cardContent} cardAuthor={localStorage.getItem('user')} description={this.state.description} onClose={(e) => this.closePopup(e)}/> 
           : null}
       </div>
     )

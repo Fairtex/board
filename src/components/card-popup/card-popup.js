@@ -1,7 +1,7 @@
 import React from 'react';
 import './card-popup.css';
 
-const CardPopup = ({comments, cardName, cardAuthor, description, clickHandler}) => {
+const CardPopup = ({comments, cardName, cardAuthor, description, onClose}) => {
 
   const CardComments = comments.map(item => {
     const {id, value, author} = item;
@@ -20,7 +20,7 @@ const CardPopup = ({comments, cardName, cardAuthor, description, clickHandler}) 
           {cardName}
           <div>Author: {cardAuthor}</div>
         </h3>
-        <button className="close" onClick={(e) => clickHandler(e)}>&times;</button>
+        <button className="close" onClick={(e) => onClose(e)}>&times;</button>
       </header>
       <div className="modal-body">
         <p className="card-description">{description}</p>
