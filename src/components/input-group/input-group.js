@@ -4,7 +4,7 @@ import './input-group.css';
 const InputGroup = (props) => {
   const Element = () => {
     if (props.groupType === 'input') {
-      return <input type={props.inputType} className={props.inputClass} placeholder={props.inputPlaceholder}/>
+      return <input type={props.inputType} className={props.inputClass} placeholder={props.inputPlaceholder} value={props.value} onChange={props.onChange}/>
     }
     if (props.groupType === 'textarea') {
       return <textarea className={props.inputClass} rows={props.inputRows} placeholder={props.inputPlaceholder}></textarea>

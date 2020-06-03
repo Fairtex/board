@@ -4,4 +4,6 @@
   font-size: 1.1rem;
   color: blue;
   cursor: pointer;
+  flex-grow: 1;
+  position: static;
 }

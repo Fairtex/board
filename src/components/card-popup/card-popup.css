@@ -1,0 +1,35 @@
+.card-popup {
+  width: 100%;
+  max-width: 650px;
+  min-height: 450px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 10px;
+  z-index: 99;
+  color: #000000;
+}
+
+.card-description {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 0.5rem;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.modal-subtitle {
+  text-align: center;
+}
+
+.comment-author {
+  text-transform: capitalize;
+  text-decoration: underline;
+}
+
+.comment-text {
+  padding: 0.5rem 1rem
+}

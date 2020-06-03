@@ -1,5 +1,4 @@
 import React from 'react';
-import InputGroup from '../input-group';
 import './enter-popup.css';
 
 export default class EnterPopup extends React.Component {
@@ -7,17 +6,34 @@ export default class EnterPopup extends React.Component {
     super(props);
 
     this.state = {
-      isRegistered: true
-    }
-
-    this.register = (e) => {
-      e.preventDefault();
-      console.log('Hooray! You registered')
+      isRegistered: false,
+      user: ''
     }
   }
 
+  handleInputChange(e) {
+    let userName = e.target.value
+    this.setState(state => ({
+      user: userName
+    }))
+  }
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    if (this.state.user !== '') {
+      localStorage.setItem('user', this.state.user);
+      this.setState(state => ({
+        isRegistered: !this.state.isRegistered
+      }))
+    }
+  }
+
+  handleCloseBtnClick() {
+    console.log('popup closed')
+  }
+
   render() {
-    if (this.state.isRegistered) {
+    if (localStorage.getItem('user')) {
       return null
     }
     return (
@@ -26,9 +42,12 @@ export default class EnterPopup extends React.Component {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title">Kanban board</h1>
-              <button className="close">&times;</button>
+              <button className="close" onClick={() => this.handleCloseBtnClick()}>&times;</button>
             </div>
-            <InputGroup groupType="input" groupClass="modal-body" inputType="text" inputClass="username-input" inputPlaceholder="Username" btnClass="btn-primary" btnContent="Sign in" onSubmit={this.register}/>
+            <form className="modal-body" onSubmit={(e) => this.handleFormSubmit(e)}>
+              <input type="text" className="username-input" placeholder="Username" value={this.state.user} onChange={(e) => this.handleInputChange(e)} />
+              <button type="submit" className="btn btn-primary">Sign In</button>
+            </form>
           </div>
         </div>
       </div>
