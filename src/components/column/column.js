@@ -7,20 +7,29 @@ export default class Column extends React.Component {
     super(props);
 
     this.state = {
-      cards: [{value: "Example", id: 0}]
+      cards: localStorage.getItem(`cards-${this.props.name}`) ? JSON.parse(localStorage.getItem(`cards-${this.props.name}`)) : []
     }
 
     this.inputRef = React.createRef();
   }
 
+  // componentDidMount() {
+  //   if (localStorage.getItem(`cards-${this.props.name}`)) {
+  //     this.setState(state => ({
+  //       cards:  JSON.parse(localStorage.getItem(`cards-${this.props.name}`))
+  //     }))
+  //   }
+  // }
+
   addCard(e) {
     e.preventDefault();
     if (this.inputRef.current.value) {
       let newCards = this.state.cards;
-      newCards.push({value: this.inputRef.current.value, id: this.state.cards.length});
+      newCards.push({value: this.inputRef.current.value, author: localStorage.getItem('user') || 'guest', id: Math.floor(Math.random() * 10000)});
       this.setState(state => ({
         cards: newCards
       }));
+      localStorage.setItem(`cards-${this.props.name}`, JSON.stringify(newCards));
       this.inputRef.current.value = '';
     } else {
       console.log('Enter card name!');
@@ -32,10 +41,11 @@ export default class Column extends React.Component {
     const newCards = [
       ...this.state.cards.slice(0, item),
       ...this.state.cards.slice(item + 1)
-    ]
+    ];
     this.setState(state => ({
       cards: newCards
-    }))
+    }));
+    localStorage.setItem(`cards-${this.props.name}`, JSON.stringify(newCards));
   }
 
   render() {
@@ -45,7 +55,9 @@ export default class Column extends React.Component {
         <CardList cards={this.state.cards} onDelete={(id) => this.deleteCard(id)}/>
         <form className="input-group" onSubmit={(e) => this.addCard(e)}>
           <input type="text" className="form-control" placeholder="add card" ref={this.inputRef} />
-          <button type="submit" className="btn btn-light">+</button>
+          <button type="submit" className="btn btn-light">
+            <i className="fa fa-plus"></i>
+          </button>
         </form>
       </div>
     );

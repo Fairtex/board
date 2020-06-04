@@ -14,21 +14,25 @@ const CardPopup = ({comments, cardName, cardAuthor, description, onClose}) => {
   });
 
   return (
-    <div className="card-popup">
-      <header className="modal-header">
-        <h3 className="modal-title">
-          {cardName}
-          <div>Author: {cardAuthor}</div>
-        </h3>
-        <button className="close" onClick={(e) => onClose(e)}>&times;</button>
-      </header>
-      <div className="modal-body">
-        <p className="card-description">{description}</p>
+    <div className="card-overlay">
+      <div className="card-popup">
+        <header className="modal-header">
+          <h3 className="modal-title">
+            {cardName}
+            <div>Author: {cardAuthor}</div>
+          </h3>
+          <button className="close" onClick={(e) => onClose(e)}>
+            <i className="fa fa-times"></i>
+          </button>
+        </header>
+        <div className="modal-body">
+          <p className="card-description">{description}</p>
+        </div>
+        <ul className="card-comments">
+          <div className="modal-subtitle">Comments</div>
+          {CardComments}
+        </ul>
       </div>
-      <ul className="card-comments">
-        <div className="modal-subtitle">Comments</div>
-        {CardComments}
-      </ul>
     </div>
   )
 }

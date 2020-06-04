@@ -7,7 +7,18 @@ export default class EnterPopup extends React.Component {
 
     this.state = {
       isRegistered: false,
+      isModalOpen: true,
       user: ''
+    }
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('user')) {
+      this.setState(state => ({
+        isRegistered: true,
+        user: localStorage.getItem('user'),
+        isModalOpen: false
+      }));
     }
   }
 
@@ -23,17 +34,23 @@ export default class EnterPopup extends React.Component {
     if (this.state.user !== '') {
       localStorage.setItem('user', this.state.user);
       this.setState(state => ({
-        isRegistered: !this.state.isRegistered
+        isRegistered: !this.state.isRegistered,
+        isModalOpen: false
       }))
     }
   }
 
   handleCloseBtnClick() {
-    console.log('popup closed')
+    this.setState(state => ({
+      isModalOpen: false
+    }))
   }
 
   render() {
-    if (localStorage.getItem('user')) {
+    // if (localStorage.getItem('user')) {
+    //   return null
+    // }
+    if (!this.state.isModalOpen) {
       return null
     }
     return (
@@ -42,7 +59,9 @@ export default class EnterPopup extends React.Component {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title">Kanban board</h1>
-              <button className="close" onClick={() => this.handleCloseBtnClick()}>&times;</button>
+              <button className="close" onClick={() => this.handleCloseBtnClick()}>
+                <i className="fa fa-times"></i>
+              </button>
             </div>
             <form className="modal-body" onSubmit={(e) => this.handleFormSubmit(e)}>
               <input type="text" className="username-input" placeholder="Username" value={this.state.user} onChange={(e) => this.handleInputChange(e)} />

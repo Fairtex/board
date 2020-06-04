@@ -1,3 +1,13 @@
+.card-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
 .card-popup {
   width: 100%;
   max-width: 650px;
@@ -11,6 +21,7 @@
   border-radius: 10px;
   z-index: 99;
   color: #000000;
+  cursor: auto;
 }
 
 .card-description {
