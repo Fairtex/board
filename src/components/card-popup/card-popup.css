@@ -13,9 +13,9 @@
   max-width: 650px;
   min-height: 450px;
   position: absolute;
-  top: 50%;
+  top: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   background-color: whitesmoke;
   border: 1px solid rgba(0,0,0,0.3);
   border-radius: 10px;
@@ -24,23 +24,15 @@
   cursor: auto;
 }
 
-.card-description {
+.comment-form {
+  width: 100%;
+  padding: 0.5rem 1rem;
+}
+
+.comment-textarea {
   background-color: #ffffff;
   border-radius: 5px;
   padding: 0.5rem;
   width: 100%;
-  font-size: 1.2rem;
-}
-
-.modal-subtitle {
-  text-align: center;
-}
-
-.comment-author {
-  text-transform: capitalize;
-  text-decoration: underline;
-}
-
-.comment-text {
-  padding: 0.5rem 1rem
+  border: none;
 }

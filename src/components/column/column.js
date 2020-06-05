@@ -1,5 +1,6 @@
 import React from 'react';
 import CardList from '../card-list';
+import {v1 as uuid} from 'uuid';
 import './column.css';
 
 export default class Column extends React.Component {
@@ -13,19 +14,11 @@ export default class Column extends React.Component {
     this.inputRef = React.createRef();
   }
 
-  // componentDidMount() {
-  //   if (localStorage.getItem(`cards-${this.props.name}`)) {
-  //     this.setState(state => ({
-  //       cards:  JSON.parse(localStorage.getItem(`cards-${this.props.name}`))
-  //     }))
-  //   }
-  // }
-
   addCard(e) {
     e.preventDefault();
     if (this.inputRef.current.value) {
       let newCards = this.state.cards;
-      newCards.push({value: this.inputRef.current.value, author: localStorage.getItem('user') || 'guest', id: Math.floor(Math.random() * 10000)});
+      newCards.push({value: this.inputRef.current.value, author: localStorage.getItem('user') || 'guest', id: uuid(), comments: [], description: ''});
       this.setState(state => ({
         cards: newCards
       }));

@@ -7,12 +7,6 @@ export default class Card extends React.Component {
     super(props);
 
     this.state = {
-      description: 'bodraya carta zhi est',
-      comments: [
-        {id: 1,
-        value: 'krasava',
-        author: 'brogyaga'}
-      ],
       isOpened: false
     }
   }
@@ -35,7 +29,7 @@ export default class Card extends React.Component {
       <div className="card" onClick={() => this.openPopup()}>
         {this.props.cardContent}
         {this.state.isOpened 
-          ? <CardPopup comments={this.state.comments} cardName={this.props.cardContent} cardAuthor={this.props.cardAuthor} description={this.state.description} onClose={(e) => this.closePopup(e)}/> 
+          ? <CardPopup cardName={this.props.cardContent} cardAuthor={this.props.cardAuthor} cardId={this.props.cardId} onClose={(e) => this.closePopup(e)}/> 
           : null}
       </div>
     )

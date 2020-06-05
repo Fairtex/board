@@ -59,7 +59,7 @@ export default class EnterPopup extends React.Component {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title">Kanban board</h1>
-              <button className="close" onClick={() => this.handleCloseBtnClick()}>
+              <button className="close" onClick={(e) => this.handleCloseBtnClick(e)}>
                 <i className="fa fa-times"></i>
               </button>
             </div>
