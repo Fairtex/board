@@ -5,28 +5,42 @@ export default class Description extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOnChange: false
+      isOnChange: this.props.text || false
     }
+
+    this.descriptionRef = React.createRef();
   }
 
-  changeDesc() {
+  changeDesc(e) {
+    if (this.descriptionRef.current.value) {
+      const cardsArr = JSON.parse(localStorage.getItem('cards'));
+      cardsArr.find(item => item.id === this.props.cardId).description = this.descriptionRef.current.value;
+      localStorage.setItem(`cards`, JSON.stringify(cardsArr));
+    }
     this.setState(state => ({
       isOnChange: !this.state.isOnChange
     }));
+    this.props.onChangeDesc(e);
+  }
+
+  changeField() {
+    this.setState(state => ({
+      isOnChange: !this.state.isOnChange
+    }))
   }
 
   descriptionField() {
-    if (this.state.isOnChange) {
+    if (!this.state.isOnChange) {
       return (
-        <form className="card-description-form" onSubmit={(e) => this.props.onChangeDesc(e)}>
-          <textarea rows="2" placeholder="Card description" className="card-description-textarea" />
+        <form className="card-description-form" onSubmit={(e) => this.changeDesc(e)}>
+          <textarea rows="2" placeholder="Card description" className="card-description-textarea" ref={this.descriptionRef}/>
           <button type="submit" className="btn btn-primary">Save</button>
-          <button type="reset" className="btn"><i className="fa fa-times"></i></button>
+          <button type="button" className="btn" onClick={() => this.changeField()}><i className="fa fa-times"></i></button>
         </form>
       )
     }
     return (
-      <p className="card-description" onClick={() => this.changeDesc()}>
+      <p className="card-description" onClick={() => this.changeField()}>
         {this.props.text}
       </p>
     )

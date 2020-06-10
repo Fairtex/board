@@ -1,7 +1,7 @@
 .board {
   width: 100%;
   max-width: 1600px;
-  padding: 5% 10%;
+  padding: 5% 5%;
   margin: 0 auto;
   flex-wrap: nowrap;
 }

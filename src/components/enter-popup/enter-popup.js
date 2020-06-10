@@ -47,9 +47,6 @@ export default class EnterPopup extends React.Component {
   }
 
   render() {
-    // if (localStorage.getItem('user')) {
-    //   return null
-    // }
     if (!this.state.isModalOpen) {
       return null
     }

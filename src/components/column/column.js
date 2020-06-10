@@ -8,7 +8,9 @@ export default class Column extends React.Component {
     super(props);
 
     this.state = {
-      cards: localStorage.getItem(`cards-${this.props.name}`) ? JSON.parse(localStorage.getItem(`cards-${this.props.name}`)) : []
+      cards: localStorage.getItem(`cards`) 
+        ? JSON.parse(localStorage.getItem(`cards`)).filter(item => item.columnId === props.columnId) 
+        : []
     }
 
     this.inputRef = React.createRef();
@@ -17,12 +19,12 @@ export default class Column extends React.Component {
   addCard(e) {
     e.preventDefault();
     if (this.inputRef.current.value) {
-      let newCards = this.state.cards;
-      newCards.push({value: this.inputRef.current.value, author: localStorage.getItem('user') || 'guest', id: uuid(), comments: [], description: ''});
+      let newCards = localStorage.getItem(`cards`) ? JSON.parse(localStorage.getItem(`cards`)) : [];
+      newCards.push({value: this.inputRef.current.value, author: localStorage.getItem('user') || 'guest', columnId: this.props.columnId, id: uuid(), description: ''});
       this.setState(state => ({
-        cards: newCards
+        cards: newCards.filter(item => item.columnId === this.props.columnId) 
       }));
-      localStorage.setItem(`cards-${this.props.name}`, JSON.stringify(newCards));
+      localStorage.setItem(`cards`,JSON.stringify(newCards));
       this.inputRef.current.value = '';
     } else {
       console.log('Enter card name!');
@@ -30,22 +32,22 @@ export default class Column extends React.Component {
   }
 
   deleteCard(id) {
-    const item = this.state.cards.findIndex(el => el.id === id);
+    const item = JSON.parse(localStorage.getItem(`cards`)).findIndex(el => el.id === id);
     const newCards = [
-      ...this.state.cards.slice(0, item),
-      ...this.state.cards.slice(item + 1)
+      ...JSON.parse(localStorage.getItem(`cards`)).slice(0, item),
+      ...JSON.parse(localStorage.getItem(`cards`)).slice(item + 1)
     ];
     this.setState(state => ({
-      cards: newCards
+      cards: newCards.filter(item => item.columnId === this.props.columnId)
     }));
-    localStorage.setItem(`cards-${this.props.name}`, JSON.stringify(newCards));
+    localStorage.setItem(`cards`, JSON.stringify(newCards));
   }
 
   render() {
     return (
       <div className="column col">
         <h3 className="column__title">{this.props.name}</h3>
-        <CardList cards={this.state.cards} onDelete={(id) => this.deleteCard(id)}/>
+        <CardList cards={this.state.cards} onDelete={(id) => this.deleteCard(id)} columnId={this.props.columnId}/>
         <form className="input-group" onSubmit={(e) => this.addCard(e)}>
           <input type="text" className="form-control" placeholder="add card" ref={this.inputRef} />
           <button type="submit" className="btn btn-light">

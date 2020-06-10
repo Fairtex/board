@@ -29,8 +29,11 @@ export default class Card extends React.Component {
       <div className="card" onClick={() => this.openPopup()}>
         {this.props.cardContent}
         {this.state.isOpened 
-          ? <CardPopup cardName={this.props.cardContent} cardAuthor={this.props.cardAuthor} cardId={this.props.cardId} onClose={(e) => this.closePopup(e)}/> 
+          ? <CardPopup cardName={this.props.cardContent} cardAuthor={this.props.cardAuthor} cardId={this.props.cardId} cardDescription={this.props.cardDescription} onClose={(e) => this.closePopup(e)} /> 
           : null}
+        <button type="button" className="btn btn-primary card-edit-btn">
+          <i className="fa fa-pencil"></i>
+        </button>
       </div>
     )
   }
