@@ -1,5 +1,6 @@
 import React from 'react';
 import CardPopup from '../card-popup';
+import Button from '../button';
 import './card.css';
 
 export default class Card extends React.Component {
@@ -7,34 +8,57 @@ export default class Card extends React.Component {
     super(props);
 
     this.state = {
-      isOpened: false
+      isOpened: false,
+      isOnChange: false
     }
   }
 
-  openPopup() {
-    this.setState(state => ({
+  openPopup = () => {
+    this.setState(() => ({
       isOpened: true
     }))
   }
 
-  closePopup(e) {
+  closePopup = (e) => {
     e.stopPropagation()
-    this.setState(state => ({
+    this.setState(() => ({
       isOpened: false
     }))
   }
 
+  changeName = () => {
+    this.setState(() => ({
+      isOnChange: !this.state.isOnChange
+    }))
+  }
+
+  cardNameField = () => {
+    
+  }
+
   render() {
     return (
-      <div className="card" onClick={() => this.openPopup()}>
-        {this.props.cardContent}
-        {this.state.isOpened 
-          ? <CardPopup cardName={this.props.cardContent} cardAuthor={this.props.cardAuthor} cardId={this.props.cardId} cardDescription={this.props.cardDescription} onClose={(e) => this.closePopup(e)} /> 
-          : null}
-        <button type="button" className="btn btn-primary card-edit-btn">
+      <li className={this.props.className}>
+        <input className="card" onClick={this.openPopup} value={this.props.cardContent} readOnly/>
+        <Button 
+          type="button" 
+          className="btn btn-danger small" 
+          onClick={() => this.props.onDeleteBtnClick(this.props.cardId)}>
+          <i className="fa fa-trash-o"></i>
+        </Button>
+        <Button type="button" className="btn btn-primary small">
           <i className="fa fa-pencil"></i>
-        </button>
-      </div>
+        </Button>
+        {this.state.isOpened 
+          ? <CardPopup 
+              cardName={this.props.cardContent} 
+              cardAuthor={this.props.cardAuthor} 
+              cardId={this.props.cardId} 
+              cardDescription={this.props.cardDescription} 
+              onClose={this.closePopup} 
+            /> 
+          : null}
+      </li>
     )
   }
 }

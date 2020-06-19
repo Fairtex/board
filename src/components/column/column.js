@@ -16,12 +16,20 @@ export default class Column extends React.Component {
     this.inputRef = React.createRef();
   }
 
-  addCard(e) {
+  addCard = (e) => {
     e.preventDefault();
+    
     if (this.inputRef.current.value) {
       let newCards = localStorage.getItem(`cards`) ? JSON.parse(localStorage.getItem(`cards`)) : [];
-      newCards.push({value: this.inputRef.current.value, author: localStorage.getItem('user') || 'guest', columnId: this.props.columnId, id: uuid(), description: ''});
-      this.setState(state => ({
+
+      newCards.push({
+        value: this.inputRef.current.value, 
+        author: localStorage.getItem('user') || 'guest', 
+        columnId: this.props.columnId, 
+        id: uuid(), 
+        description: ''
+      });
+      this.setState(() => ({
         cards: newCards.filter(item => item.columnId === this.props.columnId) 
       }));
       localStorage.setItem(`cards`,JSON.stringify(newCards));
@@ -31,13 +39,14 @@ export default class Column extends React.Component {
     }
   }
 
-  deleteCard(id) {
+  deleteCard = (id) => {
     const item = JSON.parse(localStorage.getItem(`cards`)).findIndex(el => el.id === id);
     const newCards = [
       ...JSON.parse(localStorage.getItem(`cards`)).slice(0, item),
       ...JSON.parse(localStorage.getItem(`cards`)).slice(item + 1)
     ];
-    this.setState(state => ({
+
+    this.setState(() => ({
       cards: newCards.filter(item => item.columnId === this.props.columnId)
     }));
     localStorage.setItem(`cards`, JSON.stringify(newCards));
@@ -47,8 +56,8 @@ export default class Column extends React.Component {
     return (
       <div className="column col">
         <h3 className="column__title">{this.props.name}</h3>
-        <CardList cards={this.state.cards} onDelete={(id) => this.deleteCard(id)} columnId={this.props.columnId}/>
-        <form className="input-group" onSubmit={(e) => this.addCard(e)}>
+        <CardList cards={this.state.cards} onDelete={this.deleteCard} columnId={this.props.columnId}/>
+        <form className="input-group" onSubmit={this.addCard}>
           <input type="text" className="form-control" placeholder="add card" ref={this.inputRef} />
           <button type="submit" className="btn btn-light">
             <i className="fa fa-plus"></i>

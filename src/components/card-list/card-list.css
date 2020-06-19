@@ -10,3 +10,7 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.small {
+  padding: 0.175rem 0.45rem;
+}

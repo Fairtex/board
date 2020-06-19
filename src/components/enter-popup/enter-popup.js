@@ -12,9 +12,9 @@ export default class EnterPopup extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     if (localStorage.getItem('user')) {
-      this.setState(state => ({
+      this.setState(() => ({
         isRegistered: true,
         user: localStorage.getItem('user'),
         isModalOpen: false
@@ -22,26 +22,26 @@ export default class EnterPopup extends React.Component {
     }
   }
 
-  handleInputChange(e) {
+  handleInputChange = (e) => {
     let userName = e.target.value
-    this.setState(state => ({
+    this.setState(() => ({
       user: userName
     }))
   }
 
-  handleFormSubmit(e) {
+  handleFormSubmit = (e) => {
     e.preventDefault();
     if (this.state.user !== '') {
       localStorage.setItem('user', this.state.user);
-      this.setState(state => ({
+      this.setState(() => ({
         isRegistered: !this.state.isRegistered,
         isModalOpen: false
       }))
     }
   }
 
-  handleCloseBtnClick() {
-    this.setState(state => ({
+  handleCloseBtnClick = () => {
+    this.setState(() => ({
       isModalOpen: false
     }))
   }
@@ -56,12 +56,12 @@ export default class EnterPopup extends React.Component {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title">Kanban board</h1>
-              <button className="close" onClick={(e) => this.handleCloseBtnClick(e)}>
+              <button className="close" onClick={this.handleCloseBtnClick}>
                 <i className="fa fa-times"></i>
               </button>
             </div>
-            <form className="modal-body" onSubmit={(e) => this.handleFormSubmit(e)}>
-              <input type="text" className="username-input" placeholder="Username" value={this.state.user} onChange={(e) => this.handleInputChange(e)} />
+            <form className="modal-body" onSubmit={this.handleFormSubmit}>
+              <input type="text" className="username-input" placeholder="Username" value={this.state.user} onChange={this.handleInputChange} />
               <button type="submit" className="btn btn-primary">Sign In</button>
             </form>
           </div>

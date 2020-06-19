@@ -10,7 +10,9 @@ const Comments = ({comments, onDelete}) => {
       <li key={id} className="comment-item">
         <div className="comment-author">{author}</div>
         <p className="comment-text">{value}</p>
-        <Button type="button" className="btn btn-primary" content="Delete" onClick={() => onDelete(id)}/>
+        <Button type="button" className="btn btn-primary" onClick={() => onDelete(id)}>
+          Delete
+        </Button>
       </li>
     );
   });
