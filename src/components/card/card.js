@@ -11,6 +11,8 @@ export default class Card extends React.Component {
       isOpened: false,
       isOnChange: false
     }
+
+    this.cardNameRef = React.createRef();
   }
 
   openPopup = () => {
@@ -32,8 +34,16 @@ export default class Card extends React.Component {
     }))
   }
 
-  cardNameField = () => {
-    
+  cardNameField = () => { // функция для смены имени карты - дописать
+    if (!this.state.isOnChange) {
+      return (
+        <form className="card-name-form" onSubmit={this.changeName}>
+          <input value={this.props.cardContent} className="card-name-input" ref={this.cardNameRef}/>
+          <button type="submit" className="btn btn-primary">Save</button>
+          <button type="button" className="btn" onClick={this.changeName}><i className="fa fa-times"></i></button>
+        </form>
+      )
+    }
   }
 
   render() {
