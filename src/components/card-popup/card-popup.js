@@ -1,7 +1,6 @@
 import React from 'react';
-import {v1 as uuid} from 'uuid';
 import Description from '../description';
-import Comments from '../comment';
+import CommentsBlock from '../comments-block';
 import Button from '../button';
 import './card-popup.css';
 
@@ -10,10 +9,7 @@ export default class CardPopup extends React.Component {
     super(props);
 
     this.state = {
-      description: JSON.parse(localStorage.getItem(`cards`)).filter(item => item.id === this.props.cardId)[0].description,
-      comments: localStorage.getItem(`comments`) 
-        ? JSON.parse(localStorage.getItem(`comments`)).filter(item => item.cardId === this.props.cardId) 
-        : []
+      description: JSON.parse(localStorage.getItem(`cards`)).filter(item => item.id === this.props.cardId)[0].description
     }
 
     this.textRef = React.createRef();
@@ -22,43 +18,9 @@ export default class CardPopup extends React.Component {
   changeDesc = (e) => {
     e.preventDefault();
     const newDescription = JSON.parse(localStorage.getItem(`cards`)).filter(item => item.id === this.props.cardId);
-    this.setState(state => ({
+    this.setState(() => ({
        description: newDescription[0].description
     }))
-  }
-
-  addComment = (e) => {
-    e.preventDefault();
-    if (this.textRef.current.value) {
-      let newComments = localStorage.getItem(`comments`) ? JSON.parse(localStorage.getItem(`comments`)) : [];
-
-      newComments.unshift({
-        id: uuid(), 
-        cardId: this.props.cardId, 
-        value: this.textRef.current.value, 
-        author: localStorage.getItem('user') || 'guest'
-      })
-      this.setState(() => ({
-        comments: newComments.filter(item => item.cardId === this.props.cardId)
-      }))
-      this.textRef.current.value = '';
-      localStorage.setItem(`comments`, JSON.stringify(newComments));
-    } else {
-      console.log('Enter comment text!')
-    }
-  }
-
-  deleteComment = (id) => {
-    const item = JSON.parse(localStorage.getItem('comments')).findIndex(el => el.id === id);
-    const newComments = [
-      ...JSON.parse(localStorage.getItem('comments')).slice(0, item),
-      ...JSON.parse(localStorage.getItem('comments')).slice(item + 1)
-    ];
-
-    this.setState(() => ({
-      comments: newComments.filter(item => item.cardId === this.props.cardId)
-    }));
-    localStorage.setItem(`comments`, JSON.stringify(newComments));
   }
 
   render() {
@@ -75,13 +37,12 @@ export default class CardPopup extends React.Component {
             </Button>
           </header>
           <div className="modal-body">
-            <Description text={this.state.description} cardId={this.props.cardId} onChangeDesc={this.changeDesc}/>
+            <Description 
+              text={this.state.description} 
+              cardId={this.props.cardId} 
+              onChangeDesc={this.changeDesc}/>
           </div>
-          <Comments comments={this.state.comments} onDelete={this.deleteComment}/>
-          <form className="comment-form" onSubmit={this.addComment}>
-            <textarea className="comment-textarea" rows="2" placeholder="add comment" ref={this.textRef}/>
-            <button type="submit" className="btn btn-primary">Add</button>
-          </form>
+          <CommentsBlock cardId={this.props.cardId}/>
         </div>
       </div>
     )

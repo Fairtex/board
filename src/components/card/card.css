@@ -5,7 +5,7 @@
   color: blue;
   cursor: pointer;
   flex-grow: 1;
-  max-width: 242px;
+  max-width: 100%;
   position: static;
   display: flex;
 }

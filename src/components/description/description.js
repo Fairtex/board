@@ -1,4 +1,5 @@
 import React from 'react';
+import ChangeForm from '../change-form';
 import './description.css';
 
 export default class Description extends React.Component {
@@ -32,11 +33,11 @@ export default class Description extends React.Component {
   descriptionField = () => {
     if (!this.state.isOnChange) {
       return (
-        <form className="card-description-form" onSubmit={this.changeDesc}>
-          <textarea rows="2" placeholder="Card description" className="card-description-textarea" ref={this.descriptionRef}/>
-          <button type="submit" className="btn btn-primary">Save</button>
-          <button type="button" className="btn" onClick={this.changeField}><i className="fa fa-times"></i></button>
-        </form>
+        <ChangeForm 
+          ref={this.descriptionRef}
+          currentValue={this.props.text}
+          onSubmit={this.changeDesc}
+          onCloseBtnClick={this.changeField}/>
       )
     }
     return (

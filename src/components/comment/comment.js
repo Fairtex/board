@@ -2,27 +2,27 @@ import React from 'react';
 import Button from '../button';
 import './comment.css';
 
-const Comments = ({comments, onDelete}) => {
+export default class Comment extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const CardComments = comments.map(item => {
-    const {id, value, author} = item;
+    this.state = {
+      isOnChange: false
+    }
+  }
+
+  render() {
     return (
-      <li key={id} className="comment-item">
-        <div className="comment-author">{author}</div>
-        <p className="comment-text">{value}</p>
-        <Button type="button" className="btn btn-primary" onClick={() => onDelete(id)}>
+      <div>
+        <div className="comments__item-author">{this.props.commAuthor}</div>
+        <p className="comments__item-text">{this.props.commValue}</p>
+        <Button type="button" className="btn btn-primary" onClick={() => this.props.onDeleteClick(this.props.commId)}>
           Delete
         </Button>
-      </li>
-    );
-  });
-
-  return (
-    <ul className="card-comments">
-      <div className="modal-subtitle"><i className="fa fa-list"></i> Comments</div>
-        {CardComments}
-    </ul>
-  )
+        <Button type="button" className="btn btn-primary">
+          <i className="fa fa-pencil"></i>
+        </Button>
+      </div>
+    )
+  }
 }
-
-export default Comments;

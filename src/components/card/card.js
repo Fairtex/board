@@ -1,6 +1,7 @@
 import React from 'react';
 import CardPopup from '../card-popup';
 import Button from '../button';
+import ChangeForm from '../change-form';
 import './card.css';
 
 export default class Card extends React.Component {
@@ -9,7 +10,8 @@ export default class Card extends React.Component {
 
     this.state = {
       isOpened: false,
-      isOnChange: false
+      isOnChange: false,
+      cardName: this.props.cardContent
     }
 
     this.cardNameRef = React.createRef();
@@ -28,35 +30,48 @@ export default class Card extends React.Component {
     }))
   }
 
-  changeName = () => {
+  toggleChangeNameForm = () => {
     this.setState(() => ({
       isOnChange: !this.state.isOnChange
     }))
   }
 
-  cardNameField = () => { // функция для смены имени карты - дописать
-    if (!this.state.isOnChange) {
-      return (
-        <form className="card-name-form" onSubmit={this.changeName}>
-          <input value={this.props.cardContent} className="card-name-input" ref={this.cardNameRef}/>
-          <button type="submit" className="btn btn-primary">Save</button>
-          <button type="button" className="btn" onClick={this.changeName}><i className="fa fa-times"></i></button>
-        </form>
-      )
+  changeName = (e) => {
+    e.preventDefault();
+    if (this.cardNameRef.current.value) {
+      const cardsArr = JSON.parse(localStorage.getItem('cards'));
+      cardsArr.find(item => item.id === this.props.cardId).value = this.cardNameRef.current.value;
+      localStorage.setItem(`cards`, JSON.stringify(cardsArr));
+      this.setState(() => ({
+        cardName: this.cardNameRef.current.value
+      }))
     }
+    this.setState(() => ({
+      isOnChange: !this.state.isOnChange,
+    }))
   }
 
-  render() {
+  cardField = () => {
+    if (this.state.isOnChange) {
+      return (
+        <ChangeForm 
+          ref={this.cardNameRef}
+          currentValue={this.state.cardName}
+          onSubmit={this.changeName}
+          onCloseBtnClick={this.toggleChangeNameForm}/>
+      )
+    }
+
     return (
-      <li className={this.props.className}>
-        <input className="card" onClick={this.openPopup} value={this.props.cardContent} readOnly/>
+      <div className={this.props.className}>
+        <div className="card" onClick={this.openPopup}>{this.state.cardName}</div>
         <Button 
           type="button" 
           className="btn btn-danger small" 
           onClick={() => this.props.onDeleteBtnClick(this.props.cardId)}>
           <i className="fa fa-trash-o"></i>
         </Button>
-        <Button type="button" className="btn btn-primary small">
+        <Button type="button" className="btn btn-primary small" onClick={this.toggleChangeNameForm}>
           <i className="fa fa-pencil"></i>
         </Button>
         {this.state.isOpened 
@@ -68,6 +83,14 @@ export default class Card extends React.Component {
               onClose={this.closePopup} 
             /> 
           : null}
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <li>
+        {this.cardField()}
       </li>
     )
   }

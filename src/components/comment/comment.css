@@ -1,24 +1,13 @@
-.comment-item {
-  padding-left: 1.5rem;
-  padding-top: 0.2rem;
-  margin-bottom: 1rem;
-}
-
-.comment-author {
+.comments__item-author {
   text-transform: capitalize;
   font-size: 1.2rem;
   color: #000;
 }
 
-.card-comments {
-  margin: 0;
-  padding: 1rem;
-  list-style: none;
-}
-
-.comment-text {
+.comments__item-text {
   background-color: #ffffff;
   border-radius: 5px;
   padding: 0.5rem;
+  margin-bottom: 0.3rem;
   width: 100%;
 }
