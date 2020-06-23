@@ -51,10 +51,11 @@ export default class CommentsBlock extends React.Component {
     localStorage.setItem(`comments`, JSON.stringify(newComments));
   }
 
-  changeComm = (id) => {
-    const newComments =  JSON.parse(localStorage.getItem(`comments`));
+  changeComm = (id, e) => {
+    e.preventDefault();
+    const newComments = JSON.parse(localStorage.getItem(`comments`));
     newComments.find(item => item.id === id).value = this.chageCommRef.current.value;
-    localStorage.setItem(`cards`, JSON.stringify(newComments));
+    localStorage.setItem(`comments`, JSON.stringify(newComments));
     this.setState(() => ({
       comments: newComments.filter(item => item.cardId === this.props.cardId)
     }))
@@ -68,7 +69,11 @@ export default class CommentsBlock extends React.Component {
           <textarea className="comment-textarea" rows="2" placeholder="add comment" ref={this.addCommRef}/>
           <button type="submit" className="btn btn-primary">Add</button>
         </form>
-        <CommentList comments={this.state.comments} changeRef={this.chageCommRef} onDelete={this.deleteComment}/>
+        <CommentList 
+          comments={this.state.comments} 
+          changeRef={this.chageCommRef} 
+          onDelete={this.deleteComment}
+          onChangeClick={this.changeComm}/>
       </div>
     )
   }

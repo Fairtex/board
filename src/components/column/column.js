@@ -2,6 +2,7 @@ import React from 'react';
 import CardList from '../card-list';
 import {v1 as uuid} from 'uuid';
 import './column.css';
+import ChangeInput from '../change-input';
 
 export default class Column extends React.Component {
   constructor(props) {
@@ -10,20 +11,22 @@ export default class Column extends React.Component {
     this.state = {
       cards: localStorage.getItem(`cards`) 
         ? JSON.parse(localStorage.getItem(`cards`)).filter(item => item.columnId === props.columnId) 
-        : []
+        : [],
+      columnName: this.props.name,
+      isColumnNameChanged: false
     }
 
-    this.inputRef = React.createRef();
+    this.cardInputRef = React.createRef();
   }
 
   addCard = (e) => {
     e.preventDefault();
     
-    if (this.inputRef.current.value) {
+    if (this.cardInputRef.current.value) {
       let newCards = localStorage.getItem(`cards`) ? JSON.parse(localStorage.getItem(`cards`)) : [];
 
       newCards.push({
-        value: this.inputRef.current.value, 
+        value: this.cardInputRef.current.value, 
         author: localStorage.getItem('user') || 'guest', 
         columnId: this.props.columnId, 
         id: uuid(), 
@@ -33,7 +36,7 @@ export default class Column extends React.Component {
         cards: newCards.filter(item => item.columnId === this.props.columnId) 
       }));
       localStorage.setItem(`cards`,JSON.stringify(newCards));
-      this.inputRef.current.value = '';
+      this.cardInputRef.current.value = '';
     } else {
       console.log('Enter card name!');
     }
@@ -52,13 +55,41 @@ export default class Column extends React.Component {
     localStorage.setItem(`cards`, JSON.stringify(newCards));
   }
 
+  toggleChangeNameForm = () => {
+    this.setState(() => ({
+      isColumnNameChanged: !this.state.isColumnNameChanged
+    }))
+  }
+
+  changeColName = (e) => {
+    let colName = e.target.value
+    this.setState(() => ({
+      columnName: colName
+    }))
+  }
+
+  ColNameField = () => {
+    if (!this.state.isColumnNameChanged) {
+      return (
+        <h3 className="column__title--point" onClick={this.toggleChangeNameForm}>
+          {this.state.columnName}
+        </h3>
+      )
+    }
+    return (
+      <ChangeInput defaultValue={this.state.columnName} onChange={this.changeColName} />
+    )
+  }
+
   render() {
     return (
       <div className="column col">
-        <h3 className="column__title">{this.props.name}</h3>
+        <div className="column__title">
+          {this.ColNameField()}
+        </div>
         <CardList cards={this.state.cards} onDelete={this.deleteCard} columnId={this.props.columnId}/>
         <form className="input-group" onSubmit={this.addCard}>
-          <input type="text" className="form-control" placeholder="add card" ref={this.inputRef} />
+          <input type="text" className="form-control" placeholder="add card" ref={this.cardInputRef} />
           <button type="submit" className="btn btn-light">
             <i className="fa fa-plus"></i>
           </button>

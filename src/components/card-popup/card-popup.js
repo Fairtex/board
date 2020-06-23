@@ -32,7 +32,7 @@ export default class CardPopup extends React.Component {
               <i className="fa fa-list-alt"></i> {this.props.cardName}
               <div><i className="fa fa-user"></i> {this.props.cardAuthor}</div>
             </h3>
-            <Button type="button" className="close" onClick={(e) => this.props.onClose(e)} >
+            <Button type="button" className="close" onClick={(e) => this.props.onCloseBtnClick(e)} >
               <i className="fa fa-times"></i>
             </Button>
           </header>

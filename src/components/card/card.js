@@ -76,11 +76,11 @@ export default class Card extends React.Component {
         </Button>
         {this.state.isOpened 
           ? <CardPopup 
-              cardName={this.props.cardContent} 
+              cardName={this.state.cardName} 
               cardAuthor={this.props.cardAuthor} 
               cardId={this.props.cardId} 
               cardDescription={this.props.cardDescription} 
-              onClose={this.closePopup} 
+              onCloseBtnClick={this.closePopup}
             /> 
           : null}
       </div>

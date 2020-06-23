@@ -61,7 +61,7 @@ export default class EnterPopup extends React.Component {
               </button>
             </div>
             <form className="modal-body" onSubmit={this.handleFormSubmit}>
-              <input type="text" className="username-input" placeholder="Username" value={this.state.user} onChange={this.handleInputChange} />
+              <input type="text" className="username-input" placeholder="Username" defaultValue={this.state.user} onChange={this.handleInputChange} />
               <button type="submit" className="btn btn-primary">Sign In</button>
             </form>
           </div>
