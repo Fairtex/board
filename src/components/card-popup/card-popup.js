@@ -12,7 +12,19 @@ export default class CardPopup extends React.Component {
       description: JSON.parse(localStorage.getItem(`cards`)).filter(item => item.id === this.props.cardId)[0].description
     }
 
+    this.isKeyPressed = false
+
     this.textRef = React.createRef();
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.keyDownHandler);
+    window.addEventListener('keyup', this.keyUpHandler);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.keyDownHandler);
+    window.removeEventListener('keyup', this.keyUpHandler);
   }
 
   changeDesc = (e) => {
@@ -21,6 +33,17 @@ export default class CardPopup extends React.Component {
     this.setState(() => ({
        description: newDescription[0].description
     }))
+  }
+
+  keyDownHandler = (e) => {
+    if (e.key === 'Escape' && !this.isKeyPressed) {
+      this.props.onCloseBtnClick(e)
+      this.isKeyPressed = true;
+    }
+  }
+
+  keyUpHandler = () => {
+    this.isKeyPressed = false;
   }
 
   render() {
