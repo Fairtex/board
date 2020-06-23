@@ -51,46 +51,77 @@ export default class Card extends React.Component {
     }))
   }
 
-  cardField = () => {
-    if (this.state.isOnChange) {
-      return (
-        <ChangeForm 
-          ref={this.cardNameRef}
-          currentValue={this.state.cardName}
-          onSubmit={this.changeName}
-          onCloseBtnClick={this.toggleChangeNameForm}/>
-      )
-    }
+  // cardField = () => {
+  //   if (this.state.isOnChange) {
+  //     return (
+  //       <ChangeForm 
+  //         ref={this.cardNameRef}
+  //         currentValue={this.state.cardName}
+  //         onSubmit={this.changeName}
+  //         onCloseBtnClick={this.toggleChangeNameForm}/>
+  //     )
+  //   }
 
-    return (
-      <div className={this.props.className}>
-        <div className="card" onClick={this.openPopup}>{this.state.cardName}</div>
-        <Button 
-          type="button" 
-          className="btn btn-danger small" 
-          onClick={() => this.props.onDeleteBtnClick(this.props.cardId)}>
-          <i className="fa fa-trash-o"></i>
-        </Button>
-        <Button type="button" className="btn btn-primary small" onClick={this.toggleChangeNameForm}>
-          <i className="fa fa-pencil"></i>
-        </Button>
-        {this.state.isOpened 
-          ? <CardPopup 
-              cardName={this.state.cardName} 
-              cardAuthor={this.props.cardAuthor} 
-              cardId={this.props.cardId} 
-              cardDescription={this.props.cardDescription} 
-              onCloseBtnClick={this.closePopup}
-            /> 
-          : null}
-      </div>
-    )
-  }
+  //   return (
+  //     <div className={this.props.className}>
+  //       <div className="card" onClick={this.openPopup}>{this.state.cardName}</div>
+  //       <Button 
+  //         type="button" 
+  //         className="btn btn-danger small" 
+  //         onClick={() => this.props.onDeleteBtnClick(this.props.cardId)}>
+  //         <i className="fa fa-trash-o"></i>
+  //       </Button>
+  //       <Button type="button" className="btn btn-primary small" onClick={this.toggleChangeNameForm}>
+  //         <i className="fa fa-pencil"></i>
+  //       </Button>
+  //       {this.state.isOpened && (
+  //         <CardPopup 
+  //           cardName={this.state.cardName} 
+  //           cardAuthor={this.props.cardAuthor} 
+  //           cardId={this.props.cardId} 
+  //           cardDescription={this.props.cardDescription} 
+  //           onCloseBtnClick={this.closePopup}
+  //         />
+  //       )}
+  //     </div>
+  //   )
+  // }
 
   render() {
     return (
       <li>
-        {this.cardField()}
+        {this.state.isOnChange 
+          ? (
+              <ChangeForm 
+                ref={this.cardNameRef}
+                currentValue={this.state.cardName}
+                onSubmit={this.changeName}
+                onCloseBtnClick={this.toggleChangeNameForm}/>
+            )
+          : (
+              <div className={this.props.className}>
+                <div className="card" onClick={this.openPopup}>{this.state.cardName}</div>
+                <Button 
+                  type="button" 
+                  className="btn btn-danger small" 
+                  onClick={() => this.props.onDeleteBtnClick(this.props.cardId)}>
+                  <i className="fa fa-trash-o"></i>
+                </Button>
+                <Button type="button" className="btn btn-primary small" onClick={this.toggleChangeNameForm}>
+                  <i className="fa fa-pencil"></i>
+                </Button>
+                {this.state.isOpened && (
+                  <CardPopup 
+                    cardName={this.state.cardName} 
+                    cardAuthor={this.props.cardAuthor} 
+                    cardId={this.props.cardId} 
+                    cardDescription={this.props.cardDescription} 
+                    onCloseBtnClick={this.closePopup}
+                  />
+                )}
+              </div>
+            )
+        }
       </li>
     )
   }
