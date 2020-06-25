@@ -12,7 +12,7 @@
   width: 100%;
   max-width: 650px;
   min-height: 450px;
-  position: absolute;
+  position: fixed;
   top: 10%;
   left: 50%;
   transform: translate(-50%, 0);
@@ -24,15 +24,27 @@
   cursor: auto;
 }
 
-.comment-form {
-  width: 100%;
-  padding: 0.5rem 1rem;
+.card-popup__header {
+  position: relative;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: calc(.3rem - 1px);
+  border-top-right-radius: calc(.3rem - 1px);
 }
 
-.comment-textarea {
-  background-color: #ffffff;
-  border-radius: 5px;
-  padding: 0.5rem;
-  width: 100%;
-  border: none;
+.card-popup__title {
+  max-width: 85%;
+  margin: 0 0 0.2rem;
+  word-break: break-word;
+}
+
+.card-popup__author {
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.card-popup__close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }

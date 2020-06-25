@@ -37,7 +37,7 @@ export default class CardPopup extends React.Component {
 
   keyDownHandler = (e) => {
     if (e.key === 'Escape' && !this.isKeyPressed) {
-      this.props.onCloseBtnClick(e)
+      this.props.onCloseBtnClick(e);
       this.isKeyPressed = true;
     }
   }
@@ -50,12 +50,10 @@ export default class CardPopup extends React.Component {
     return (
       <div className="card-overlay">
         <div className="card-popup">
-          <header className="modal-header">
-            <h3 className="modal-title">
-              <i className="fa fa-list-alt"></i> {this.props.cardName}
-              <div><i className="fa fa-user"></i> {this.props.cardAuthor}</div>
-            </h3>
-            <Button type="button" className="close" onClick={(e) => this.props.onCloseBtnClick(e)} >
+          <header className="card-popup__header">   
+            <h3 className="card-popup__title"><i className="fa fa-list-alt"></i>{this.props.cardName}</h3>
+            <div className="card-popup__author"><i className="fa fa-user"></i> {this.props.cardAuthor}</div>
+            <Button type="button" className="card-popup__close-btn close" onClick={(e) => this.props.onCloseBtnClick(e)} >
               <i className="fa fa-times"></i>
             </Button>
           </header>
@@ -65,7 +63,7 @@ export default class CardPopup extends React.Component {
               cardId={this.props.cardId} 
               onChangeDesc={this.changeDesc}/>
           </div>
-          <CommentsBlock cardId={this.props.cardId}/>
+          <CommentsBlock cardId={this.props.cardId} onComment={this.props.onComment}/>
         </div>
       </div>
     )

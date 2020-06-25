@@ -30,28 +30,37 @@ export default class Description extends React.Component {
     }))
   }
 
-  descriptionField = () => {
-    if (!this.state.isOnChange) {
-      return (
-        <ChangeForm 
-          ref={this.descriptionRef}
-          currentValue={this.props.text}
-          onSubmit={this.changeDesc}
-          onCloseBtnClick={this.changeField}/>
-      )
-    }
-    return (
-      <p className="card-description" onClick={this.changeField}>
-        {this.props.text}
-      </p>
-    )
-  }
+  // descriptionField = () => {
+  //   if (!this.state.isOnChange) {
+  //     return (
+  //       <ChangeForm 
+  //         ref={this.descriptionRef}
+  //         currentValue={this.props.text}
+  //         onSubmit={this.changeDesc}
+  //         onCloseBtnClick={this.changeField}/>
+  //     )
+  //   }
+  //   return (
+  //     <p className="card-description" onClick={this.changeField}>
+  //       {this.props.text}
+  //     </p>
+  //   )
+  // }
 
   render() {
     return (
       <div className="card-description-wrap">
         <h4 className="card-description-title"><i className="fa fa-align-left"></i> Description</h4>
-        {this.descriptionField()}
+        {!this.state.isOnChange
+          ? <ChangeForm 
+              ref={this.descriptionRef}
+              currentValue={this.props.text}
+              onSubmit={this.changeDesc}
+              onCloseBtnClick={this.changeField}/>
+          : (<p className="card-description" onClick={this.changeField}>
+              {this.props.text}
+            </p>)
+        }
       </div>
     )
   }

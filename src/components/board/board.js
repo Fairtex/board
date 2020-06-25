@@ -8,23 +8,28 @@ export default class Board extends React.Component {
     super(props);
 
     this.state = {
-      columns: [
-        { name: "toDo", id: uuid(), columnId: 1 },
-        { name: "Progress", id: uuid(), columnId: 2 },
-        { name: "Test", id: uuid(), columnId: 3 },
-        { name: "Done", id: uuid(), columnId: 4 }
-      ]
-    }
+      columns: localStorage.getItem('columns')
+        ? JSON.parse(localStorage.getItem('columns'))
+        : [
+          { name: "toDo", id: uuid()},
+          { name: "Progress", id: uuid()},
+          { name: "Test", id: uuid()},
+          { name: "Done", id: uuid()}
+        ]
+    };
 
     this.boardColumns = this.state.columns.map(item => {
-      const {name, id, columnId} = item;
+      const {name, id} = item;
       return (
-        <Column name={name} key={id} columnId={columnId} />
+        <Column name={name} key={id} columnId={id} />
       )
-    })
+    });
   }
 
   render() {
+    if (!localStorage.getItem('columns')) {
+      localStorage.setItem('columns', JSON.stringify(this.state.columns));
+    }
     return (
       <main className="board row">
         {this.boardColumns}

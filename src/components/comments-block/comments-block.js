@@ -33,6 +33,7 @@ export default class CommentsBlock extends React.Component {
       }))
       this.addCommRef.current.value = '';
       localStorage.setItem(`comments`, JSON.stringify(newComments));
+      this.props.onComment();
     } else {
       console.log('Enter comment text!')
     }
@@ -49,6 +50,7 @@ export default class CommentsBlock extends React.Component {
       comments: newComments.filter(item => item.cardId === this.props.cardId)
     }));
     localStorage.setItem(`comments`, JSON.stringify(newComments));
+    this.props.onComment();
   }
 
   changeComm = (id, e) => {
@@ -66,7 +68,7 @@ export default class CommentsBlock extends React.Component {
       <div className="comments">
         <div className="comments__title"><i className="fa fa-list"></i> Comments</div>
         <form className="comments__form" onSubmit={this.addComment}>
-          <textarea className="comment-textarea" rows="2" placeholder="add comment" ref={this.addCommRef}/>
+          <textarea className="comments__textarea" rows="2" placeholder="add comment" ref={this.addCommRef}/>
           <button type="submit" className="btn btn-primary">Add</button>
         </form>
         <CommentList 

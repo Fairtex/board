@@ -12,3 +12,7 @@
   width: 100%;
   padding: 0.5rem 0;
 }
+
+.comments__textarea {
+  width: 100%;
+}

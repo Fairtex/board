@@ -1,12 +1,12 @@
 .card {
   border-radius: 5px;
-  padding: 0.5rem 0 0.5rem 0.5rem;
+  padding: 0.5rem 0 1.2rem 0.5rem;
   font-size: 1.1rem;
   color: blue;
   cursor: pointer;
   flex-grow: 1;
-  max-width: 100%;
-  position: static;
+  max-width: 280px;
+  position: relative;
   display: flex;
 }
 
@@ -17,4 +17,11 @@
   font-size: .875rem;
   line-height: 1.5;
   border-radius: .2rem;
+}
+
+.card__comment-num {
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.1rem;
+  font-size: 0.8rem;
 }

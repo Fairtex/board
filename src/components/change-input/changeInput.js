@@ -1,40 +1,32 @@
 import React from 'react';
 import './changeInput.css';
 
-export default class ChangeInput extends React.Component {
-  constructor(props) {
-    super(props);
+const ChangeInput = React.forwardRef((props,ref) => {
+  let isKeyPressed = false;
 
-    this.state = {
-      isDisabled: true
-    }
-
-    this.isKeyPressed = false;
-  }
-
-  keyHandler = (e) => {
-    if (e.key === 'Enter' && !this.isKeyPressed) {
-      console.log('shliapa');
-      this.isKeyPressed = true;
+  const keyDownHandler = (e) => {
+    if (e.key === 'Enter' && !isKeyPressed) {
+      isKeyPressed = true;
+      props.onEnter();
     }
   }
 
-  toggleEvent = () => {
-    this.isKeyPressed = false;
+  const keyUpHandler = () => {
+    isKeyPressed = false;
   }
 
-  render() {
-    return (
-      <textarea
-        rows="1" 
-        className="change-input" 
-        autoFocus
-        maxLength="80"
-        defaultValue={this.props.defaultValue} 
-        onChange={this.changeHandler}
-        onKeyDown={this.keyHandler}
-        onKeyUp={this.toggleEvent}
-        onBlur={this.changeHandler}/>
-    )
-  }
-}
+  return (
+    <textarea
+      ref={ref}
+      rows="1" 
+      className="change-input" 
+      autoFocus={true}
+      maxLength="80"
+      defaultValue={props.defaultValue} 
+      onKeyDown={keyDownHandler}
+      onKeyUp={keyUpHandler}
+      onBlur={props.onEnter}/>
+  )
+})
+
+export default ChangeInput;
