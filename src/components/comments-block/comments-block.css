@@ -15,4 +15,11 @@
 
 .comments__textarea {
   width: 100%;
+  border: 1px solid #ffffff;
+  resize: none;
+  border-radius: 5px;
+}
+
+.comments__textarea:focus {
+  border-color: #007bff;
 }

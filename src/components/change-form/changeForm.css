@@ -1,3 +1,10 @@
 .change-form__textarea {
   width: 100%;
+  border: 1px solid #ffffff;
+  resize: none;
+  border-radius: 5px;
+}
+
+.change-form__textarea:focus {
+  border-color: #007bff;
 }

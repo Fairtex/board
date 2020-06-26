@@ -79,15 +79,17 @@ export default class Card extends React.Component {
                        </span>)
                     : null}
                 </div>
-                <Button 
-                  type="button" 
-                  className="btn btn-danger small" 
-                  onClick={() => this.props.onDeleteBtnClick(this.props.cardId)}>
-                  <i className="fa fa-trash-o"></i>
-                </Button>
-                <Button type="button" className="btn btn-primary small" onClick={this.toggleChangeNameForm}>
-                  <i className="fa fa-pencil"></i>
-                </Button>
+                  <div className="card__button-group">
+                    <Button 
+                      type="button" 
+                      className="btn btn-danger small" 
+                      onClick={() => this.props.onDeleteBtnClick(this.props.cardId)}>
+                      <i className="fa fa-trash-o"></i>
+                    </Button>
+                    <Button type="button" className="btn btn-primary small" onClick={this.toggleChangeNameForm}>
+                      <i className="fa fa-pencil"></i>
+                    </Button>
+                  </div>
                 {this.state.isOpened && (
                   <CardPopup 
                     cardName={this.state.cardName} 

@@ -30,23 +30,6 @@ export default class Description extends React.Component {
     }))
   }
 
-  // descriptionField = () => {
-  //   if (!this.state.isOnChange) {
-  //     return (
-  //       <ChangeForm 
-  //         ref={this.descriptionRef}
-  //         currentValue={this.props.text}
-  //         onSubmit={this.changeDesc}
-  //         onCloseBtnClick={this.changeField}/>
-  //     )
-  //   }
-  //   return (
-  //     <p className="card-description" onClick={this.changeField}>
-  //       {this.props.text}
-  //     </p>
-  //   )
-  // }
-
   render() {
     return (
       <div className="card-description-wrap">

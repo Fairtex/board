@@ -17,11 +17,13 @@ export default class Board extends React.Component {
           { name: "Done", id: uuid()}
         ]
     };
+  }
 
-    this.boardColumns = this.state.columns.map(item => {
+  boardColumns = () => {
+    return this.state.columns.map(item => {
       const {name, id} = item;
       return (
-        <Column name={name} key={id} columnId={id} />
+        <Column name={name} key={id} columnId={id}/>
       )
     });
   }
@@ -32,7 +34,7 @@ export default class Board extends React.Component {
     }
     return (
       <main className="board row">
-        {this.boardColumns}
+        {this.boardColumns()}
       </main>
     )
   };

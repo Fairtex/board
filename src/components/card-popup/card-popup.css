@@ -12,6 +12,8 @@
   width: 100%;
   max-width: 650px;
   min-height: 450px;
+  max-height: 650px;
+  overflow-y: auto;
   position: fixed;
   top: 10%;
   left: 50%;

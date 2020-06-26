@@ -1,72 +1,48 @@
 import React from 'react';
 import './enter-popup.css';
 
-export default class EnterPopup extends React.Component {
-  constructor(props) {
-    super(props);
+const EnterPopup = ({isAuthorized, onEnter}) => {
 
-    this.state = {
-      isRegistered: false,
-      isModalOpen: true,
-      user: ''
-    }
+  let userName = '';
+
+  const handleCloseBtnClick = () => {
+    localStorage.setItem('user', 'guest');
+    onEnter();
   }
 
-  componentDidMount = () => {
-    if (localStorage.getItem('user')) {
-      this.setState(() => ({
-        isRegistered: true,
-        user: localStorage.getItem('user'),
-        isModalOpen: false
-      }));
-    }
+  const handleInputChange = (e) => {
+    userName = e.target.value;
   }
 
-  handleInputChange = (e) => {
-    let userName = e.target.value
-    this.setState(() => ({
-      user: userName
-    }))
-  }
-
-  handleFormSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (this.state.user !== '') {
-      localStorage.setItem('user', this.state.user);
-      this.setState(() => ({
-        isRegistered: !this.state.isRegistered,
-        isModalOpen: false
-      }))
+    if (userName) {
+      localStorage.setItem('user', userName);
+      onEnter();
     }
   }
 
-  handleCloseBtnClick = () => {
-    this.setState(() => ({
-      isModalOpen: false
-    }))
-  }
-
-  render() {
-    if (!this.state.isModalOpen) {
-      return null
-    }
-    return (
-      <div className="enter-modal">
-        <div className="overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title">Kanban board</h1>
-              <button className="close" onClick={this.handleCloseBtnClick}>
-                <i className="fa fa-times"></i>
-              </button>
+  return (
+    <div className="enter-modal">
+      {isAuthorized 
+        ? null
+        : (<div className="overlay">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title">Kanban board</h1>
+                <button className="close" onClick={handleCloseBtnClick}>
+                  <i className="fa fa-times"></i>
+                </button>
+              </div>
+              <form className="modal-body" onSubmit={handleFormSubmit}>
+                <input type="text" className="username-input" placeholder="Username" onChange={handleInputChange} />
+                <button type="submit" className="btn btn-primary">Sign In</button>
+              </form>
             </div>
-            <form className="modal-body" onSubmit={this.handleFormSubmit}>
-              <input type="text" className="username-input" placeholder="Username" defaultValue={this.state.user} onChange={this.handleInputChange} />
-              <button type="submit" className="btn btn-primary">Sign In</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
-  }
+          </div>)
+      }
+    </div>
+  )
 }
+
+export default EnterPopup;

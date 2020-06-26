@@ -91,7 +91,7 @@ export default class Column extends React.Component {
                 ref={this.columnNameRef}/>
           }
         </div>
-        <CardList cards={this.state.cards} onDelete={this.deleteCard} columnId={this.props.columnId}/>
+        <CardList cards={this.state.cards} onDelete={this.deleteCard} columnId={this.props.columnId} />
         <form className="input-group" onSubmit={this.addCard}>
           <input type="text" className="form-control" placeholder="add card" ref={this.cardInputRef} />
           <button type="submit" className="btn btn-light">
