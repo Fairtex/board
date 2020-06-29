@@ -1,7 +1,5 @@
 import React from 'react';
-import CardPopup from '../card-popup';
-import Button from '../button';
-import ChangeForm from '../change-form';
+import CardPopup from './components/CardPopup';
 import './card.css';
 
 export default class Card extends React.Component {
@@ -10,7 +8,6 @@ export default class Card extends React.Component {
 
     this.state = {
       isOpened: false,
-      isOnChange: false,
       commentNumber: localStorage.getItem('comments') &&
         JSON.parse(localStorage.getItem('comments')).filter(item => item.cardId === this.props.cardId).length,
       cardName: this.props.cardContent
@@ -38,14 +35,7 @@ export default class Card extends React.Component {
     }))
   }
 
-  toggleChangeNameForm = () => {
-    this.setState(() => ({
-      isOnChange: !this.state.isOnChange
-    }))
-  }
-
-  changeName = (e) => {
-    e.preventDefault();
+  changeName = () => {
     if (this.cardNameRef.current.value) {
       const cardsArr = JSON.parse(localStorage.getItem('cards'));
       cardsArr.find(item => item.id === this.props.cardId).value = this.cardNameRef.current.value;
@@ -54,53 +44,35 @@ export default class Card extends React.Component {
         cardName: this.cardNameRef.current.value
       }))
     }
-    this.setState(() => ({
-      isOnChange: !this.state.isOnChange,
-    }))
   }
 
-
-
   render() {
+    const {className, cardAuthor, cardId, cardDescription, onDeleteBtnClick} = this.props;
+    const {cardName, commentNumber, isOpened} = this.state
     return (
       <li>
-        {this.state.isOnChange 
-          ? (<ChangeForm 
-              ref={this.cardNameRef}
-              currentValue={this.state.cardName}
-              onSubmit={this.changeName}
-              onCloseBtnClick={this.toggleChangeNameForm}/>)
-          : (<div className={this.props.className}>
-                <div className="card" onClick={this.openPopup}>
-                  {this.state.cardName}
-                  {this.state.commentNumber 
-                    ? (<span className="card__comment-num">
-                        <i className="fa fa-comment"></i>{this.state.commentNumber}
-                       </span>)
-                    : null}
-                </div>
-                  <div className="card__button-group">
-                    <Button 
-                      type="button" 
-                      className="btn btn-danger small" 
-                      onClick={() => this.props.onDeleteBtnClick(this.props.cardId)}>
-                      <i className="fa fa-trash-o"></i>
-                    </Button>
-                    <Button type="button" className="btn btn-primary small" onClick={this.toggleChangeNameForm}>
-                      <i className="fa fa-pencil"></i>
-                    </Button>
-                  </div>
-                {this.state.isOpened && (
-                  <CardPopup 
-                    cardName={this.state.cardName} 
-                    cardAuthor={this.props.cardAuthor} 
-                    cardId={this.props.cardId} 
-                    cardDescription={this.props.cardDescription} 
-                    onCloseBtnClick={this.closePopup}
-                    onComment={this.commentCounter}
-                  />)}
-              </div>)
-        }
+        <div className={className}>
+          <div className="card" onClick={this.openPopup}>
+            {cardName}
+            {commentNumber 
+              ? (<span className="card__comment-num">
+                  <i className="fa fa-comment"></i>{commentNumber}
+                  </span>)
+              : null}
+          </div>
+          {isOpened && (
+            <CardPopup 
+              cardName={cardName} 
+              cardNameRef={this.cardNameRef}
+              cardAuthor={cardAuthor} 
+              cardId={cardId} 
+              cardDescription={cardDescription} 
+              onCloseBtnClick={this.closePopup}
+              onChangeName={this.changeName}
+              onDeleteBtnClick={onDeleteBtnClick}
+              onComment={this.commentCounter}
+            />)}
+        </div>
       </li>
     )
   }

@@ -1,8 +1,8 @@
 import React from 'react';
-import CardList from '../card-list';
+import CardList from './components/CardList';
 import {v1 as uuid} from 'uuid';
 import './column.css';
-import ChangeInput from '../change-input';
+import ChangeInput from '../UIKit/ChangeInput';
 
 export default class Column extends React.Component {
   constructor(props) {
@@ -57,8 +57,8 @@ export default class Column extends React.Component {
   }
 
   toggleChangeNameForm = () => {
-    this.setState(() => ({
-      isColumnNameChanged: !this.state.isColumnNameChanged
+    this.setState((state) => ({
+      isColumnNameChanged: !state.isColumnNameChanged
     }))
   }
 
@@ -75,23 +75,25 @@ export default class Column extends React.Component {
   }
 
   render() {
+    const {isColumnNameChanged, columnName, cards} = this.state;
+    const {columnId} = this.props;
     return (
       <div className="column col">
         <div className="column__title">
-          {!this.state.isColumnNameChanged
+          {!isColumnNameChanged
             ? (
               <h3 className="column__title--point" onClick={this.toggleChangeNameForm}>
-                {this.state.columnName}
+                {columnName}
               </h3>
             )
             : <ChangeInput 
-                defaultValue={this.state.columnName} 
+                defaultValue={columnName} 
                 onChange={this.toggleChangeNameForm} 
                 onEnter={this.changeColumnName}
                 ref={this.columnNameRef}/>
           }
         </div>
-        <CardList cards={this.state.cards} onDelete={this.deleteCard} columnId={this.props.columnId} />
+        <CardList cards={cards} onDelete={this.deleteCard} columnId={columnId} />
         <form className="input-group" onSubmit={this.addCard}>
           <input type="text" className="form-control" placeholder="add card" ref={this.cardInputRef} />
           <button type="submit" className="btn btn-light">

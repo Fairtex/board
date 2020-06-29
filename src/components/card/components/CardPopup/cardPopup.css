@@ -1,0 +1,58 @@
+.card-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.card-popup {
+  width: 100%;
+  max-width: 650px;
+  min-height: 450px;
+  max-height: 650px;
+  overflow-y: auto;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: whitesmoke;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 10px;
+  z-index: 99;
+  color: #000000;
+  cursor: auto;
+}
+
+.card-popup__header {
+  position: relative;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: calc(.3rem - 1px);
+  border-top-right-radius: calc(.3rem - 1px);
+}
+
+.card-popup__title {
+  max-width: 85%;
+  margin: 0 0 0.2rem;
+  word-break: break-word;
+}
+
+.card-popup__author {
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.card-popup__close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.card-popup__delete-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}

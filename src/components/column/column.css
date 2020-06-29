@@ -1,5 +1,6 @@
 .column {
   flex: 0 1 auto;
+  max-width: calc(25% - 15px);
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(0,0,0,0.2);

@@ -1,7 +1,7 @@
 import React from 'react';
-import Board from '../board';
-import EnterPopup from '../enter-popup';
-import Header from '../header';
+import Board from './components/Board';
+import EnterPopup from './components/EnterPopup';
+import Header from './components/Header';
 
 export default class App extends React.Component {
   state = {
@@ -26,14 +26,15 @@ export default class App extends React.Component {
   }
 
   render() {
+    const {user, isAuthorized} = this.state 
     return (
       <div className="Kanban-board">
         <Header 
           title="Work board" 
-          user={this.state.user} 
+          user={user} 
           onExitBtnClick={this.authorizedToggle} />
         <EnterPopup 
-          isAuthorized={this.state.isAuthorized} 
+          isAuthorized={isAuthorized} 
           onEnter={this.authorizedToggle}/>
         <Board />
       </div>
