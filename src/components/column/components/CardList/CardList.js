@@ -2,7 +2,8 @@ import React from 'react';
 import Card from '../../../Card';
 import './cardList.css';
 
-const CardList = ({cards, onDelete, columnId}) => {
+const CardList = ({onDelete, columnId}) => {
+  const cards = JSON.parse(localStorage.getItem('cards')).filter(el => el.columnId === columnId)
   return (
     <ul className="card-list">
       {cards.map(item => {
