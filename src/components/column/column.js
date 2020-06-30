@@ -1,7 +1,7 @@
 import React from 'react';
 import CardList from './components/CardList';
-import './column.css';
 import ChangeInput from '../UIKit/ChangeInput';
+import './column.css';
 
 export default class Column extends React.Component {
   constructor(props) {
@@ -12,6 +12,8 @@ export default class Column extends React.Component {
       newCardName: '',
       isColumnNameChanged: false
     }
+
+    this.newCardRef = React.createRef();
   }
 
   toggleChangeNameForm = () => {
@@ -20,9 +22,14 @@ export default class Column extends React.Component {
     }))
   }
 
-  changeColumnName = () => {
-    this.props.changeColumnName(this.props.columnId);
+  changeColumnName = (id, value) => {
+    this.props.changeColumnName(id, value);
     this.toggleChangeNameForm();
+    if (value !== '' && value !== this.state.columnName) {
+      this.setState(() => ({
+        columnName: value
+      }))
+    }
   }
 
   handleInputChange = (e) => {
@@ -36,11 +43,12 @@ export default class Column extends React.Component {
     e.preventDefault()
     const { addCard, columnId } = this.props;
     addCard(columnId, this.state.newCardName);
+    this.newCardRef.current.value = '';
   }
 
   render() {
     const {isColumnNameChanged, columnName} = this.state;
-    const {columnId, deleteCard, columnNameRef} = this.props;
+    const {columnId, cards, comments, deleteCard, changeCardName} = this.props;
     return (
       <div className="column col">
         <div className="column__title">
@@ -52,14 +60,19 @@ export default class Column extends React.Component {
             )
             : <ChangeInput 
                 defaultValue={columnName} 
+                targetId={columnId}
                 onChange={this.toggleChangeNameForm} 
-                onEnter={this.changeColumnName}
-                ref={columnNameRef}/>
+                onEnter={this.changeColumnName}/>
           }
         </div>
-        <CardList onDelete={deleteCard} columnId={columnId} />
+        <CardList 
+          cards={cards} 
+          comments={comments} 
+          onDeleteCard={deleteCard} 
+          columnId={columnId}
+          changeCardName={changeCardName} />
         <form className="input-group" onSubmit={this.handleAddCard}>
-          <input type="text" className="form-control" placeholder="add card" onChange={this.handleInputChange}/>
+          <input type="text" className="form-control" placeholder="add card" ref={this.newCardRef} onChange={this.handleInputChange}/>
           <button type="submit" className="btn btn-light">
             <i className="fa fa-plus"></i>
           </button>

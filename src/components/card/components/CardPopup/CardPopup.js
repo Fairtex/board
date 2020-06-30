@@ -12,12 +12,10 @@ export default class CardPopup extends React.Component {
 
     this.state = {
       description: JSON.parse(localStorage.getItem(`cards`)).filter(item => item.id === this.props.cardId)[0].description,
-      isNameChanged: false
+      isNameChanged: false,
     }
 
     this.isKeyPressed = false
-
-    this.textRef = React.createRef();
   }
 
   componentDidMount() {
@@ -55,13 +53,13 @@ export default class CardPopup extends React.Component {
     }))
   }
 
-  changeCardName = () => {
-    this.props.onChangeName();
+  changeCardName = (id, value) => {
+    this.props.onChangeName(id, value);
     this.toggleChangeName();
   }
 
   render() {
-    const {cardName, cardNameRef, cardAuthor, cardId, onComment, onCloseBtnClick, onDeleteBtnClick} = this.props;
+    const {cardName, cardAuthor, cardId, onComment, onCloseBtnClick, onDeleteBtnClick} = this.props;
     const {isNameChanged, description} = this.state
     const isAuthor = cardAuthor === localStorage.getItem('user');
     return (
@@ -74,7 +72,7 @@ export default class CardPopup extends React.Component {
                 : <ChangeInput 
                     defaultValue={cardName} 
                     onEnter={this.changeCardName}
-                    ref={cardNameRef} />
+                    targetId={cardId} />
               )
               :(<h3 className="card-popup__title"><i className="fa fa-list-alt"></i>{cardName}</h3>)
             }

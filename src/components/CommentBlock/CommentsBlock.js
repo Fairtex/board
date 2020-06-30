@@ -33,7 +33,6 @@ export default class CommentsBlock extends React.Component {
       }))
       this.addCommRef.current.value = '';
       localStorage.setItem(`comments`, JSON.stringify(newComments));
-      this.props.onComment();
     } else {
       console.log('Enter comment text!')
     }
@@ -50,7 +49,6 @@ export default class CommentsBlock extends React.Component {
       comments: newComments.filter(item => item.cardId === this.props.cardId)
     }));
     localStorage.setItem(`comments`, JSON.stringify(newComments));
-    this.props.onComment();
   }
 
   changeComm = (id, e) => {

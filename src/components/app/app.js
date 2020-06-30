@@ -28,9 +28,6 @@ export default class App extends React.Component {
         ? JSON.parse(localStorage.getItem(`comments`))
         : []
     }
-
-    this.addCardRef = React.createRef();
-    this.columnNameRef = React.createRef();
   }
 
   componentDidMount() {
@@ -75,11 +72,23 @@ export default class App extends React.Component {
     localStorage.setItem(`cards`, JSON.stringify(newCards));
   }
 
-  changeColumnName = (columnId) => {
-    if (this.columnNameRef.current.value && 
-      (this.columnNameRef.current.value !== this.state.columns.find(item => item.id === columnId).name)) {
+  changeCardName = (cardId, value) => {
+    if (value && 
+      (value !== this.state.cards.find(item => item.id === cardId).name)) {
+      const cardsArr = JSON.parse(localStorage.getItem('cards'));
+      cardsArr.find(item => item.id === cardId).value = value;
+      localStorage.setItem(`cards`, JSON.stringify(cardsArr));
+      this.setState(() => ({
+        cards: cardsArr
+      }))
+    }
+  }
+
+  changeColumnName = (columnId, value) => {
+    if (value && 
+      (value !== this.state.columns.find(item => item.id === columnId).name)) {
       const columnsArr = JSON.parse(localStorage.getItem('columns'));
-      columnsArr.find(item => item.id === columnId).name = this.columnNameRef.current.value;
+      columnsArr.find(item => item.id === columnId).name = value;
       localStorage.setItem('columns', JSON.stringify(columnsArr));
       this.setState(() => ({
         columns: columnsArr
@@ -95,7 +104,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const {user, isAuthorized, columns, cards} = this.state 
+    const {user, isAuthorized, columns, cards, comments} = this.state 
     if (!localStorage.getItem('columns')) {
       localStorage.setItem('columns', JSON.stringify(columns));
     }
@@ -111,11 +120,11 @@ export default class App extends React.Component {
         <Board 
           columns={columns}
           cards={cards}
+          comments={comments}
           addCard={this.addCard}
           deleteCard={this.deleteCard}
           changeColumnName={this.changeColumnName}
-          addCardRef={this.addCardRef}
-          columnNameRef={this.columnNameRef}/>
+          changeCardName={this.changeCardName}/>
       </div>
     );
   }
