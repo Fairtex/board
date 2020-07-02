@@ -8,43 +8,61 @@ export default class Comment extends React.Component {
     super(props);
 
     this.state = {
-      isOnChange: false
-    }
+      isOnChange: false,
+    };
   }
 
   toggleChangeCommForm = () => {
     this.setState((state) => ({
-      isOnChange: !state.isOnChange
-    }))
-  }
+      isOnChange: !state.isOnChange,
+    }));
+  };
 
   render() {
-    const {user, commValue, commAuthor, commId, onDeleteClick, onChangeClick} = this.props;
-    const {isOnChange} = this.state;
+    const {
+      user,
+      commValue,
+      commAuthor,
+      commId,
+      onDeleteClick,
+      onChangeClick,
+    } = this.props;
+    const { isOnChange } = this.state;
     const isAuthor = commAuthor === user;
     return (
       <li className="comments__item">
-        {isOnChange
-        ? (<ChangeForm
-          currentValue={commValue}
-          itemId={commId}
-          onSubmit={onChangeClick}
-          onCloseBtnClick={this.toggleChangeCommForm}/>)
-        : (<div>
+        {isOnChange ? (
+          <ChangeForm
+            currentValue={commValue}
+            itemId={commId}
+            onSubmit={onChangeClick}
+            onCloseBtnClick={this.toggleChangeCommForm}
+          />
+        ) : (
+          <div>
             <div className="comments__item-author">{commAuthor}</div>
             <p className="comments__item-text">{commValue}</p>
-            {isAuthor &&
+            {isAuthor && (
               <div className="btn-block">
-                <Button type="button" className="btn btn-primary" onClick={() => onDeleteClick(commId)}>
+                <Button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => onDeleteClick(commId)}
+                >
                   Delete
                 </Button>
-                <Button type="button" className="btn btn-primary" onClick={this.toggleChangeCommForm}>
+                <Button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={this.toggleChangeCommForm}
+                >
                   <i className="fa fa-pencil"></i>
                 </Button>
-              </div>}
-            </div>)
-        }
+              </div>
+            )}
+          </div>
+        )}
       </li>
-    )
+    );
   }
 }

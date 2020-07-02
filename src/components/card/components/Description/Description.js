@@ -6,33 +6,37 @@ export default class Description extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOnChange: this.props.text || false
-    }
+      isOnChange: this.props.text || false,
+    };
   }
 
   changeField = () => {
     this.setState((state) => ({
-      isOnChange: !state.isOnChange
-    }))
-  }
+      isOnChange: !state.isOnChange,
+    }));
+  };
 
   render() {
-    const {text, cardId, onChangeDesc} = this.props;
-    const {isOnChange} = this.state;
+    const { text, cardId, onChangeDesc } = this.props;
+    const { isOnChange } = this.state;
     return (
       <div className="card-description-wrap">
-        <h4 className="card-description-title"><i className="fa fa-align-left"></i> Description</h4>
-        {!isOnChange
-          ? <ChangeForm 
-              currentValue={text}
-              onSubmit={onChangeDesc}
-              itemId={cardId}
-              onCloseBtnClick={this.changeField}/>
-          : (<p className="card-description" onClick={this.changeField}>
-              {text}
-            </p>)
-        }
+        <h4 className="card-description-title">
+          <i className="fa fa-align-left"></i> Description
+        </h4>
+        {!isOnChange ? (
+          <ChangeForm
+            currentValue={text}
+            onSubmit={onChangeDesc}
+            itemId={cardId}
+            onCloseBtnClick={this.changeField}
+          />
+        ) : (
+          <p className="card-description" onClick={this.changeField}>
+            {text}
+          </p>
+        )}
       </div>
-    )
+    );
   }
 }

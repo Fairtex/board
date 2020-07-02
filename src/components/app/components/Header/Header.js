@@ -2,12 +2,11 @@ import React from 'react';
 import './header.css';
 import Button from '../../../UIKit/Button';
 
-const Header = ({user, title, onExitBtnClick}) => {
-
+const Header = ({ user, title, onExitBtnClick }) => {
   const onExit = () => {
     localStorage.removeItem('user');
     onExitBtnClick();
-  }
+  };
 
   return (
     <header className="header">
@@ -18,15 +17,12 @@ const Header = ({user, title, onExitBtnClick}) => {
       <div className="header__user-block">
         <i className="fa fa-github-alt"></i>
         <span className="header__username">{user}</span>
-        <Button 
-          type="button" 
-          className="btn btn-primary" 
-          onClick={onExit}>
-            Exit
+        <Button type="button" className="btn btn-primary" onClick={onExit}>
+          Exit
         </Button>
       </div>
     </header>
-  )
+  );
 };
 
 export default Header;
