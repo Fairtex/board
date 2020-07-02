@@ -1,5 +1,5 @@
 import React from 'react';
-import Column from '../../../Column';
+import Column from '../../../column';
 import './board.css';
 
 const Board = ({user, columns, cards, addCard, deleteCard, 

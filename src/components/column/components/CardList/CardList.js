@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../../../Card';
+import Card from '../../../card';
 import './cardList.css';
 
 const CardList = ({user, onDeleteCard, cards, comments, columnId, 

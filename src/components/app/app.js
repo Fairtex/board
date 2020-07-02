@@ -61,12 +61,7 @@ export default class App extends React.Component {
   }
 
   deleteCard = (id) => {
-    const item = JSON.parse(localStorage.getItem(`cards`)).findIndex(el => el.id === id);
-    const newCards = [
-      ...JSON.parse(localStorage.getItem(`cards`)).slice(0, item),
-      ...JSON.parse(localStorage.getItem(`cards`)).slice(item + 1)
-    ];
-
+    const newCards = JSON.parse(localStorage.getItem('cards')).filter(el => el.id !== id)
     this.setState(() => ({
       cards: newCards
     }));
@@ -93,12 +88,7 @@ export default class App extends React.Component {
   }
 
   deleteComment = (id) => {
-    const item = JSON.parse(localStorage.getItem('comments')).findIndex(el => el.id === id);
-    const newComments = [
-      ...JSON.parse(localStorage.getItem('comments')).slice(0, item),
-      ...JSON.parse(localStorage.getItem('comments')).slice(item + 1)
-    ];
-
+    const newComments = JSON.parse(localStorage.getItem('comments')).filter(el => el.id !== id)
     this.setState(() => ({
       comments: newComments
     }));
