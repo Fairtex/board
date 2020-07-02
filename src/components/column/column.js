@@ -8,11 +8,10 @@ export default class Column extends React.Component {
     super(props);
 
     this.state = {
-      columnName: this.props.name,
-      newCardName: '',
       isColumnNameChanged: false
     }
 
+    this.newCardName = '';
     this.newCardRef = React.createRef();
   }
 
@@ -25,52 +24,51 @@ export default class Column extends React.Component {
   changeColumnName = (id, value) => {
     this.props.changeColumnName(id, value);
     this.toggleChangeNameForm();
-    if (value !== '' && value !== this.state.columnName) {
-      this.setState(() => ({
-        columnName: value
-      }))
-    }
   }
 
   handleInputChange = (e) => {
-    let cardName = e.target.value
-    this.setState(() => ({
-      newCardName: cardName
-    }))
+    this.newCardName = e.target.value
   }
 
   handleAddCard = (e) => {
     e.preventDefault()
     const { addCard, columnId } = this.props;
-    addCard(columnId, this.state.newCardName);
+    addCard(columnId, this.newCardName);
     this.newCardRef.current.value = '';
   }
 
   render() {
-    const {isColumnNameChanged, columnName} = this.state;
-    const {columnId, cards, comments, deleteCard, changeCardName} = this.props;
+    const {isColumnNameChanged} = this.state;
+    const {user, columnId, name, cards, comments, 
+          deleteCard, changeCardName, changeDescription, 
+          addComment, deleteComment, changeComment} = this.props;
     return (
       <div className="column col">
         <div className="column__title">
           {!isColumnNameChanged
             ? (
               <h3 className="column__title--point" onClick={this.toggleChangeNameForm}>
-                {columnName}
+                {name}
               </h3>
             )
             : <ChangeInput 
-                defaultValue={columnName} 
+                defaultValue={name} 
                 targetId={columnId}
                 onChange={this.toggleChangeNameForm} 
                 onEnter={this.changeColumnName}/>
           }
         </div>
         <CardList 
+          user={user}
           cards={cards} 
           comments={comments} 
           onDeleteCard={deleteCard} 
           columnId={columnId}
-          changeCardName={changeCardName} />
+          changeCardName={changeCardName} 
+          changeDescription={changeDescription}
+          addComment={addComment}
+          deleteComment={deleteComment}
+          changeComment={changeComment}/>
         <form className="input-group" onSubmit={this.handleAddCard}>
           <input type="text" className="form-control" placeholder="add card" ref={this.newCardRef} onChange={this.handleInputChange}/>
           <button type="submit" className="btn btn-light">

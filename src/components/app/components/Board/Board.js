@@ -2,13 +2,16 @@ import React from 'react';
 import Column from '../../../Column';
 import './board.css';
 
-const Board = ({columns, cards, addCard, deleteCard, changeColumnName, changeCardName, comments}) => {
+const Board = ({user, columns, cards, addCard, deleteCard, 
+              changeColumnName, changeCardName, changeDescription, 
+              comments, addComment, deleteComment, changeComment}) => {
 
   const boardColumns = () => {
     return columns.map(item => {
       const {name, id} = item;
       return (
         <Column 
+          user={user}
           cards={cards}
           comments={comments}
           name={name} 
@@ -17,7 +20,11 @@ const Board = ({columns, cards, addCard, deleteCard, changeColumnName, changeCar
           addCard={addCard} 
           deleteCard={deleteCard}
           changeColumnName={changeColumnName}
-          changeCardName={changeCardName}/>
+          changeCardName={changeCardName}
+          changeDescription={changeDescription}
+          addComment={addComment}
+          deleteComment={deleteComment}
+          changeComment={changeComment}/>
       )
     });
   }

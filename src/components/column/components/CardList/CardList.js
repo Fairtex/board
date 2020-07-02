@@ -2,7 +2,9 @@ import React from 'react';
 import Card from '../../../Card';
 import './cardList.css';
 
-const CardList = ({onDeleteCard, cards, comments, columnId, changeCardName}) => {
+const CardList = ({user, onDeleteCard, cards, comments, columnId, 
+                  changeCardName, changeDescription, 
+                  addComment, deleteComment, changeComment}) => {
   return (
     <ul className="card-list">
       {cards.map(item => {
@@ -13,6 +15,7 @@ const CardList = ({onDeleteCard, cards, comments, columnId, changeCardName}) => 
 
         return (
           <Card key={id} 
+            user={user}
             className="card-list__item" 
             cardContent={value} 
             cardAuthor={author} 
@@ -22,6 +25,10 @@ const CardList = ({onDeleteCard, cards, comments, columnId, changeCardName}) => 
             comments={comments}
             commentsNumber={comments.filter(item => item.cardId === id).length}
             changeCardName={changeCardName}
+            changeDescription={changeDescription}
+            addComment={addComment}
+            deleteComment={deleteComment}
+            changeComment={changeComment}
           />
         );
       })}

@@ -25,7 +25,9 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const {cardContent, className, cardAuthor, commentsNumber, cardId, cardDescription, onDeleteBtnClick, changeCardName} = this.props;
+    const {user, cardContent, className, cardAuthor, commentsNumber, 
+          cardId, cardDescription, onDeleteBtnClick, changeCardName, 
+          changeDescription, comments, addComment, deleteComment, changeComment} = this.props;
     const {isOpened} = this.state
     return (
       <li>
@@ -40,15 +42,19 @@ export default class Card extends React.Component {
           </div>
           {isOpened && (
             <CardPopup 
+              user={user}
               cardName={cardContent} 
-              cardNameRef={this.cardNameRef}
               cardAuthor={cardAuthor} 
               cardId={cardId} 
               cardDescription={cardDescription} 
               onCloseBtnClick={this.closePopup}
               onChangeName={changeCardName}
               onDeleteBtnClick={onDeleteBtnClick}
-              onComment={this.commentCounter}
+              changeDescription={changeDescription}
+              comments={comments}
+              addComment={addComment}
+              deleteComment={deleteComment}
+              changeComment={changeComment}
             />)}
         </div>
       </li>

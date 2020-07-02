@@ -8,20 +8,6 @@ export default class Description extends React.Component {
     this.state = {
       isOnChange: this.props.text || false
     }
-
-    this.descriptionRef = React.createRef();
-  }
-
-  changeDesc = (e) => {
-    if (this.descriptionRef.current.value) {
-      const cardsArr = JSON.parse(localStorage.getItem('cards'));
-      cardsArr.find(item => item.id === this.props.cardId).description = this.descriptionRef.current.value;
-      localStorage.setItem(`cards`, JSON.stringify(cardsArr));
-    }
-    this.setState((state) => ({
-      isOnChange: !state.isOnChange
-    }));
-    this.props.onChangeDesc(e);
   }
 
   changeField = () => {
@@ -31,16 +17,16 @@ export default class Description extends React.Component {
   }
 
   render() {
-    const {text} = this.props;
+    const {text, cardId, onChangeDesc} = this.props;
     const {isOnChange} = this.state;
     return (
       <div className="card-description-wrap">
         <h4 className="card-description-title"><i className="fa fa-align-left"></i> Description</h4>
         {!isOnChange
           ? <ChangeForm 
-              ref={this.descriptionRef}
               currentValue={text}
-              onSubmit={this.changeDesc}
+              onSubmit={onChangeDesc}
+              itemId={cardId}
               onCloseBtnClick={this.changeField}/>
           : (<p className="card-description" onClick={this.changeField}>
               {text}

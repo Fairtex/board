@@ -11,7 +11,6 @@ export default class CardPopup extends React.Component {
     super(props);
 
     this.state = {
-      description: JSON.parse(localStorage.getItem(`cards`)).filter(item => item.id === this.props.cardId)[0].description,
       isNameChanged: false,
     }
 
@@ -26,14 +25,6 @@ export default class CardPopup extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.keyDownHandler);
     window.removeEventListener('keyup', this.keyUpHandler);
-  }
-
-  changeDesc = (e) => {
-    e.preventDefault();
-    const newDescription = JSON.parse(localStorage.getItem(`cards`)).filter(item => item.id === this.props.cardId);
-    this.setState(() => ({
-       description: newDescription[0].description
-    }))
   }
 
   keyDownHandler = (e) => {
@@ -59,9 +50,11 @@ export default class CardPopup extends React.Component {
   }
 
   render() {
-    const {cardName, cardAuthor, cardId, onComment, onCloseBtnClick, onDeleteBtnClick} = this.props;
-    const {isNameChanged, description} = this.state
-    const isAuthor = cardAuthor === localStorage.getItem('user');
+    const {user, cardName, cardAuthor, cardDescription, cardId, 
+          comments, onCloseBtnClick, onDeleteBtnClick, changeDescription, 
+          addComment, deleteComment, changeComment} = this.props;
+    const {isNameChanged} = this.state
+    const isAuthor = cardAuthor === user;
     return (
       <div className="card-overlay">
         <div className="card-popup">
@@ -88,11 +81,17 @@ export default class CardPopup extends React.Component {
           </header>
           <div className="modal-body">
             <Description 
-              text={description} 
+              text={cardDescription} 
               cardId={cardId} 
-              onChangeDesc={this.changeDesc}/>
+              onChangeDesc={changeDescription}/>
           </div>
-          <CommentsBlock cardId={cardId} onComment={onComment}/>
+          <CommentsBlock 
+            user={user}
+            comments={comments}
+            cardId={cardId}  
+            addComment={addComment} 
+            deleteComment={deleteComment} 
+            changeComment={changeComment}/>
         </div>
       </div>
     )

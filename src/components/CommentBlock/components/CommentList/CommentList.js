@@ -2,24 +2,25 @@ import React from 'react';
 import Comment from '../Comment';
 import './commentList.css';
 
-const CommentList = ({comments, onDelete, changeRef, onChangeClick}) => {
-  const CardComments = comments.map(item => {
-    const {id, value, author} = item;
-    return (
-      <Comment 
-        key={id} 
-        commId={id}
-        commAuthor={author} 
-        changeRef={changeRef} 
-        commValue={value} 
-        onDeleteClick={onDelete}
-        onChangeClick={onChangeClick}/>
-    );
-  });
+const CommentList = ({user, comments, cardId, onDelete, onChangeClick}) => {
+
+  const currComments = comments.filter(el => el.cardId === cardId);
 
   return (
     <ul className="comments__list">
-      {CardComments}
+    {currComments.map(item => {
+      const {id, value, author} = item;
+      return (
+        <Comment 
+          user={user}
+          key={id} 
+          commId={id}
+          commAuthor={author} 
+          commValue={value} 
+          onDeleteClick={onDelete}
+          onChangeClick={onChangeClick}/>
+      );
+    })}
     </ul>
   )
 }
