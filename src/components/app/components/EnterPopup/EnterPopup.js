@@ -1,4 +1,6 @@
+/* eslint-disable react/no-typos */
 import React from 'react';
+import PropTypes from 'prop-types';
 import './enterPopup.css';
 
 const EnterPopup = ({ isAuthorized, onEnter }) => {
@@ -49,5 +51,10 @@ const EnterPopup = ({ isAuthorized, onEnter }) => {
     </div>
   );
 };
+
+EnterPopup.propTypes = {
+  isAuthorized: PropTypes.bool,
+  onEnter: PropTypes.func
+}
 
 export default EnterPopup;

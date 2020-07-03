@@ -1,6 +1,8 @@
+/* eslint-disable react/no-typos */
 import React from 'react';
 import './header.css';
 import Button from '../../../UIKit/Button';
+import PropTypes from 'prop-types';
 
 const Header = ({ user, title, onExitBtnClick }) => {
   const onExit = () => {
@@ -24,5 +26,11 @@ const Header = ({ user, title, onExitBtnClick }) => {
     </header>
   );
 };
+
+Header.propTypes = {
+  user: PropTypes.string,
+  title: PropTypes.string,
+  onExitBtnClick: PropTypes.func
+}
 
 export default Header;
