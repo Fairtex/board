@@ -1,4 +1,3 @@
-/* eslint-disable react/no-typos */
 import React from 'react';
 import Column from '../../../column';
 import PropTypes from 'prop-types';
