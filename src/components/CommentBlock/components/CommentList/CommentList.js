@@ -1,5 +1,6 @@
 import React from 'react';
 import Comment from '../Comment';
+import PropTypes from 'prop-types';
 import './commentList.css';
 
 const CommentList = ({ user, comments, cardId, onDelete, onChangeClick }) => {
@@ -26,3 +27,16 @@ const CommentList = ({ user, comments, cardId, onDelete, onChangeClick }) => {
 };
 
 export default CommentList;
+
+CommentList.propTypes = {
+  user: PropTypes.string,
+  cardId: PropTypes.string.isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string,
+    cardId: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.string
+  })).isRequired,
+  onDelete: PropTypes.func,
+  onChangeClick: PropTypes.func
+}

@@ -150,12 +150,29 @@ export default class App extends React.Component {
     }
   };
 
-  authorizedToggle = () => {
-    this.setState(() => ({
-      isAuthorized: !this.state.isAuthorized,
+  logoutUser = () => {
+    localStorage.removeItem('user');
+    this.setState((state) => ({
+      isAuthorized: !state.isAuthorized,
       user: localStorage.getItem('user'),
     }));
   };
+
+  unauthorizedEnter = () => {
+    localStorage.setItem('user', 'guest');
+    this.setState((state) => ({
+      isAuthorized: !state.isAuthorized,
+      user: localStorage.getItem('user'),
+    }));
+  };
+
+  authorizedEnter = (name) => {
+    localStorage.setItem('user', name);
+    this.setState((state) => ({
+      isAuthorized: !state.isAuthorized,
+      user: name,
+    }));
+  }
 
   render() {
     const { user, isAuthorized, columns, cards, comments } = this.state;
@@ -167,11 +184,12 @@ export default class App extends React.Component {
         <Header
           title="Work board"
           user={user}
-          onExitBtnClick={this.authorizedToggle}
+          onExitBtnClick={this.logoutUser}
         />
         <EnterPopup
           isAuthorized={isAuthorized}
-          onEnter={this.authorizedToggle}
+          onEnter={this.authorizedEnter}
+          onClose={this.unauthorizedEnter}
         />
         <Board
           user={user}

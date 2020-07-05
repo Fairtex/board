@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './changeInput.css';
 
 const ChangeInput = ({ defaultValue, onEnter, targetId }) => {
@@ -34,5 +35,11 @@ const ChangeInput = ({ defaultValue, onEnter, targetId }) => {
     />
   );
 };
+
+ChangeInput.propTypes = {
+  defaultValue: PropTypes.string,
+  targetId: PropTypes.string.isRequired,
+  onEnter: PropTypes.func.isRequired
+}
 
 export default ChangeInput;

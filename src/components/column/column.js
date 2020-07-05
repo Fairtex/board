@@ -1,6 +1,7 @@
 import React from 'react';
 import CardList from './components/CardList';
 import ChangeInput from '../UIKit/ChangeInput';
+import PropTypes from 'prop-types';
 import './column.css';
 
 export default class Column extends React.Component {
@@ -98,4 +99,31 @@ export default class Column extends React.Component {
       </div>
     );
   }
+}
+
+Column.propTypes = {
+  user: PropTypes.string,
+  columnId: PropTypes.string,
+  name: PropTypes.string,
+  cards: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    author: PropTypes.string,
+    columnId: PropTypes.string,
+    id: PropTypes.string,
+    description: PropTypes.string
+  })),
+  comments: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string,
+    cardId: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.string
+  })),
+  changeColumnName: PropTypes.func.isRequired,
+  addCard: PropTypes.func.isRequired,
+  deleteCard: PropTypes.func,
+  changeCardName: PropTypes.func,
+  changeDescription: PropTypes.func,
+  addComment: PropTypes.func,
+  deleteComment: PropTypes.func,
+  changeComment: PropTypes.func
 }

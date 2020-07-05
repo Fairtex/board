@@ -1,5 +1,6 @@
 import React from 'react';
 import ChangeForm from '../../../UIKit/ChangeForm';
+import PropTypes from 'prop-types';
 import './description.css';
 
 export default class Description extends React.Component {
@@ -39,4 +40,10 @@ export default class Description extends React.Component {
       </div>
     );
   }
+}
+
+Description.propTypes = {
+  text: PropTypes.string,
+  cardId: PropTypes.string.isRequired,
+  onChangeDesc: PropTypes.func.isRequired
 }

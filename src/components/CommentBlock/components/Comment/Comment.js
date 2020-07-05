@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../../../UIKit/Button';
 import './comment.css';
 import ChangeForm from '../../../UIKit/ChangeForm';
+import PropTypes from 'prop-types';
 
 export default class Comment extends React.Component {
   constructor(props) {
@@ -65,4 +66,13 @@ export default class Comment extends React.Component {
       </li>
     );
   }
+}
+
+Comment.propTypes = {
+  user: PropTypes.string.isRequired,
+  commId: PropTypes.string.isRequired,
+  commAuthor: PropTypes.string.isRequired,
+  commValue: PropTypes.string,
+  onDeleteClick: PropTypes.func.isRequired,
+  onChangeClick: PropTypes.func.isRequired
 }

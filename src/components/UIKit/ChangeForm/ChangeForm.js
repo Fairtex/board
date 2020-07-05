@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './changeForm.css';
 
 const ChangeForm = ({ currentValue, itemId, onSubmit, onCloseBtnClick }) => {
@@ -32,5 +33,12 @@ const ChangeForm = ({ currentValue, itemId, onSubmit, onCloseBtnClick }) => {
     </form>
   );
 };
+
+ChangeForm.propTypes = {
+  currentValue: PropTypes.string,
+  itemId: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onCloseBtnClick: PropTypes.func.isRequired
+}
 
 export default ChangeForm;

@@ -3,6 +3,7 @@ import Description from '../Description';
 import CommentsBlock from '../../../CommentBlock';
 import Button from '../../../UIKit/Button';
 import ChangeInput from '../../../UIKit/ChangeInput';
+import PropTypes from 'prop-types';
 import './cardPopup.css';
 
 export default class CardPopup extends React.Component {
@@ -130,4 +131,25 @@ export default class CardPopup extends React.Component {
       </div>
     );
   }
+}
+
+CardPopup.propTypes = {
+  user: PropTypes.string,
+  cardName: PropTypes.string.isRequired,
+  cardAuthor: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
+  cardDescription: PropTypes.string,
+  onCloseBtnClick: PropTypes.func.isRequired,
+  onChangeName: PropTypes.func,
+  onDeleteBtnClick: PropTypes.func,
+  changeDescription: PropTypes.func,
+  comments: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string,
+    cardId: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.string
+  })),
+  addComment: PropTypes.func,
+  deleteComment: PropTypes.func,
+  changeComment: PropTypes.func
 }

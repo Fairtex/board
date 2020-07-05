@@ -2,13 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './enterPopup.css';
 
-const EnterPopup = ({ isAuthorized, onEnter }) => {
+const EnterPopup = ({ isAuthorized, onEnter, onClose }) => {
   let userName = '';
-
-  const handleCloseBtnClick = () => {
-    localStorage.setItem('user', 'guest');
-    onEnter();
-  };
 
   const handleInputChange = (e) => {
     userName = e.target.value;
@@ -17,8 +12,7 @@ const EnterPopup = ({ isAuthorized, onEnter }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (userName) {
-      localStorage.setItem('user', userName);
-      onEnter();
+      onEnter(userName)
     }
   };
 
@@ -29,7 +23,7 @@ const EnterPopup = ({ isAuthorized, onEnter }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title">TODO board</h1>
-              <button className="close" onClick={handleCloseBtnClick}>
+              <button className="close" onClick={onClose}>
                 <i className="fa fa-times"></i>
               </button>
             </div>

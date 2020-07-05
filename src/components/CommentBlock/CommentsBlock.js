@@ -1,5 +1,6 @@
 import React from 'react';
 import './commentsBlock.css';
+import PropTypes from 'prop-types';
 import CommentList from './components/CommentList';
 
 export default class CommentsBlock extends React.Component {
@@ -50,4 +51,18 @@ export default class CommentsBlock extends React.Component {
       </div>
     );
   }
+}
+
+CommentsBlock.propTypes = {
+  user: PropTypes.string,
+  comments: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string,
+    cardId: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.string
+  })),
+  cardId: PropTypes.string.isRequired,
+  addComment: PropTypes.func,
+  deleteComment: PropTypes.func,
+  changeComment: PropTypes.func
 }

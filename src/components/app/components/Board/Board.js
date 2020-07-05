@@ -17,8 +17,8 @@ const Board = ({
   deleteComment,
   changeComment,
 }) => {
-  const boardColumns = () => {
-    return columns.map((item) => {
+  return <main className="board row">
+    {columns.map((item) => {
       const { name, id } = item;
       return (
         <Column
@@ -38,22 +38,34 @@ const Board = ({
           changeComment={changeComment}
         />
       );
-    });
-  };
-
-  return <main className="board row">{boardColumns()}</main>;
+    })}
+  </main>;
 };
 
 Board.propTypes = {
   user: PropTypes.string,
-  columns: PropTypes.array,
-  cards: PropTypes.array,
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.string
+  })).isRequired,
+  cards: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    author: PropTypes.string,
+    columnId: PropTypes.string,
+    id: PropTypes.string,
+    description: PropTypes.string
+  })),
   addCard: PropTypes.func,
   deleteCard: PropTypes.func,
   changeColumnName: PropTypes.func,
   changeCardName: PropTypes.func,
   changeDescription: PropTypes.func,
-  comments: PropTypes.array,
+  comments: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string,
+    cardId: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.string
+  })),
   addComment: PropTypes.func,
   deleteComment: PropTypes.func,
   changeComment: PropTypes.func
