@@ -1,6 +1,7 @@
 import React from 'react';
 import CardList from './components/CardList';
 import ChangeInput from '../UIKit/ChangeInput';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './column.css';
 
