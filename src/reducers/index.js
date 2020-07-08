@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { cardReducer } from './card';
+import { cards } from './card';
+import { columns } from './column';
 
 export const boardApp = combineReducers({
-  cards: cardReducer
+  cards,
+  columns
 })
