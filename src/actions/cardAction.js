@@ -1,17 +1,9 @@
 import { ADD_CARD, DELETE_CARD, RENAME_CARD, CHANGE_CARD_DESCRIPTION } from '../actionTypes';
 
-export function addCard(card) {
-  return { type: ADD_CARD, card }
-}
+export const addCard = card => ({ type: ADD_CARD, card });
 
-export function deleteCard(id) {
-  return { type: DELETE_CARD, id }
-}
+export const deleteCard = id => ({ type: DELETE_CARD, id });
 
-export function renameCard(id, name) {
-  return { type: RENAME_CARD, id, name}
-}
+export const renameCard = (id, name) => ({ type: RENAME_CARD, id, name });
 
-export function changeDescription(id, description) {
-  return { type: CHANGE_CARD_DESCRIPTION, id, description}
-}
+export const changeDescription = (id, description) => ({ type: CHANGE_CARD_DESCRIPTION, id, description })

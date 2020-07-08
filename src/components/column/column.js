@@ -2,10 +2,11 @@ import React from 'react';
 import CardList from './components/CardList';
 import ChangeInput from '../UIKit/ChangeInput';
 import { connect } from 'react-redux';
+import { addCard } from '../../actions/cardAction';
 import PropTypes from 'prop-types';
 import './column.css';
 
-export default class Column extends React.Component {
+class Column extends React.Component {
   constructor(props) {
     super(props);
 
@@ -128,3 +129,17 @@ Column.propTypes = {
   deleteComment: PropTypes.func,
   changeComment: PropTypes.func
 }
+
+const mapStateToProps = (state) => {
+  return {
+    cards: state.cards
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addCard: () => dispatch(addCard('new card'))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Column);
