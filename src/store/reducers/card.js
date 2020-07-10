@@ -5,12 +5,12 @@ export function cards(state = [], action) {
     case ADD_CARD:
       {
         console.log(action)
-        return [ ...state, {newCard: action.card} ]
+        return [ ...state, action.card ]
       }
     case DELETE_CARD:
       {
         console.log(action)
-        return [ ...state, {deletedCard: action.id} ]
+        return [ ...state, state.cards.filter(el => el.id !== action.id) ]
       }
     default: 
       return state

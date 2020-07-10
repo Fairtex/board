@@ -6,10 +6,10 @@ import { v1 as uuid } from 'uuid';
 import changeValue from '../../utils/utils';
 
 const startColumns = [
-  { name: 'toDo', id: uuid() },
-  { name: 'Progress', id: uuid() },
-  { name: 'Test', id: uuid() },
-  { name: 'Done', id: uuid() },
+  { name: 'toDo', id: 1 },
+  { name: 'Progress', id: 2 },
+  { name: 'Test', id: 3 },
+  { name: 'Done', id: 4 },
 ];
 
 export default class App extends React.Component {

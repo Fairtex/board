@@ -1,47 +1,29 @@
 import React from 'react';
 import CardList from './components/CardList';
-import ChangeInput from '../UIKit/ChangeInput';
+import ColumnNameField from './components/ColumnNameField';
+import AddCardForm from './components/AddCardForm';
 import { connect } from 'react-redux';
-import { addCard } from '../../actions/cardAction';
+import { addCard } from '../../store/actions/cardAction';
+import { renameColumn } from '../../store/actions/columnAction';
+import { v1 as uuid } from 'uuid';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import './column.css';
-
 class Column extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      isColumnNameChanged: false,
-    };
-
-    this.newCardName = '';
-    this.newCardRef = React.createRef();
-  }
-
-  toggleChangeNameForm = () => {
-    this.setState((state) => ({
-      isColumnNameChanged: !state.isColumnNameChanged,
-    }));
-  };
-
-  changeColumnName = (id, value) => {
-    this.props.changeColumnName(id, value);
-    this.toggleChangeNameForm();
-  };
-
-  handleInputChange = (e) => {
-    this.newCardName = e.target.value;
-  };
-
-  handleAddCard = (e) => {
-    e.preventDefault();
-    const { addCard, columnId } = this.props;
-    addCard(columnId, this.newCardName);
-    this.newCardRef.current.value = '';
+  handleAddCard = (cardName) => {
+    const { addCard, columnId, user } = this.props;
+    const card = {
+      value: cardName,
+      author: user,
+      columnId,
+      id: uuid(),
+      description: ''
+    }
+    addCard(card);
   };
 
   render() {
-    const { isColumnNameChanged } = this.state;
     const {
       user,
       columnId,
@@ -54,26 +36,15 @@ class Column extends React.Component {
       addComment,
       deleteComment,
       changeComment,
+      renameColumn
     } = this.props;
     return (
       <div className="column col">
-        <div className="column__title">
-          {!isColumnNameChanged ? (
-            <h3
-              className="column__title--point"
-              onClick={this.toggleChangeNameForm}
-            >
-              {name}
-            </h3>
-          ) : (
-            <ChangeInput
-              defaultValue={name}
-              targetId={columnId}
-              onChange={this.toggleChangeNameForm}
-              onEnter={this.changeColumnName}
-            />
-          )}
-        </div>
+        <ColumnNameField 
+          name={name}
+          columnId={columnId}
+          changeColumnName={renameColumn}
+        />
         <CardList
           user={user}
           cards={cards}
@@ -86,18 +57,7 @@ class Column extends React.Component {
           deleteComment={deleteComment}
           changeComment={changeComment}
         />
-        <form className="input-group" onSubmit={this.handleAddCard}>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="add card"
-            ref={this.newCardRef}
-            onChange={this.handleInputChange}
-          />
-          <button type="submit" className="btn btn-light">
-            <i className="fa fa-plus"></i>
-          </button>
-        </form>
+        <AddCardForm onSubmit={this.handleAddCard} />
       </div>
     );
   }
@@ -136,10 +96,14 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addCard: () => dispatch(addCard('new card'))
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(
+    {
+      addCard,
+      renameColumn,
+    },
+    dispatch,
+  )
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Column);
