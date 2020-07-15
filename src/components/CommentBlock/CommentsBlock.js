@@ -1,7 +1,9 @@
 import React from 'react';
-import './commentsBlock.css';
 import PropTypes from 'prop-types';
+
 import CommentList from './components/CommentList';
+
+import './commentsBlock.css';
 
 export default class CommentsBlock extends React.Component {
   constructor(props) {
@@ -11,11 +13,11 @@ export default class CommentsBlock extends React.Component {
     this.commentText = '';
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     this.commentText = e.target.value;
   };
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
     const { cardId, addComment } = this.props;
     addComment(cardId, this.commentText);
@@ -55,14 +57,16 @@ export default class CommentsBlock extends React.Component {
 
 CommentsBlock.propTypes = {
   user: PropTypes.string,
-  comments: PropTypes.arrayOf(PropTypes.shape({
-    author: PropTypes.string,
-    cardId: PropTypes.string,
-    id: PropTypes.string,
-    value: PropTypes.string
-  })),
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      author: PropTypes.string,
+      cardId: PropTypes.string,
+      id: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  ),
   cardId: PropTypes.string.isRequired,
   addComment: PropTypes.func,
   deleteComment: PropTypes.func,
-  changeComment: PropTypes.func
-}
+  changeComment: PropTypes.func,
+};

@@ -1,18 +1,41 @@
-import { ADD_CARD, DELETE_CARD } from '../actionTypes'
+import {
+  ADD_CARD,
+  CHANGE_CARD_DESCRIPTION,
+  DELETE_CARD,
+  RENAME_CARD,
+} from '../actionTypes';
 
-export function cards(state = [], action) {
-  switch (action.type) {
-    case ADD_CARD:
-      {
-        console.log(action)
-        return [ ...state, action.card ]
-      }
-    case DELETE_CARD:
-      {
-        console.log(action)
-        return [ ...state, state.cards.filter(el => el.id !== action.id) ]
-      }
-    default: 
-      return state
+export function cards(state = [], { type, payload }) {
+  switch (type) {
+    case ADD_CARD: {
+      console.log(payload);
+      return [...state, payload.card];
+    }
+    case DELETE_CARD: {
+      console.log(payload);
+      return [...state, state.cards.filter(el => el.id !== payload.id)];
+    }
+    case RENAME_CARD: {
+      console.log(payload);
+      const newState = state.map(item => {
+        if (item.id === payload.id) {
+          item.value = payload.value;
+        }
+        return item;
+      });
+      return newState;
+    }
+    case CHANGE_CARD_DESCRIPTION: {
+      console.log(payload);
+      const newState = state.map(item => {
+        if (item.id === payload.id) {
+          item.description = payload.description;
+        }
+        return item;
+      });
+      return newState;
+    }
+    default:
+      return state;
   }
 }

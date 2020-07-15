@@ -1,10 +1,11 @@
 import React from 'react';
-import './header.css';
-import Button from '../../../UIKit/Button';
 import PropTypes from 'prop-types';
 
-const Header = ({ user, title, onExitBtnClick }) => {
+import Button from '../../../UIKit/Button';
 
+import './header.css';
+
+const Header = ({ user, title, onExitBtnClick }) => {
   return (
     <header className="header">
       <h1 className="header__title">
@@ -25,7 +26,7 @@ const Header = ({ user, title, onExitBtnClick }) => {
 Header.propTypes = {
   user: PropTypes.string,
   title: PropTypes.string,
-  onExitBtnClick: PropTypes.func
-}
+  onExitBtnClick: PropTypes.func,
+};
 
 export default Header;

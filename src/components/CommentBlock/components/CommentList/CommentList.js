@@ -1,14 +1,16 @@
 import React from 'react';
-import Comment from '../Comment';
 import PropTypes from 'prop-types';
+
+import Comment from '../Comment';
+
 import './commentList.css';
 
 const CommentList = ({ user, comments, cardId, onDelete, onChangeClick }) => {
-  const currComments = comments.filter((el) => el.cardId === cardId);
+  const currComments = comments.filter(el => el.cardId === cardId);
 
   return (
     <ul className="comments__list">
-      {currComments.map((item) => {
+      {currComments.map(item => {
         const { id, value, author } = item;
         return (
           <Comment
@@ -31,12 +33,14 @@ export default CommentList;
 CommentList.propTypes = {
   user: PropTypes.string,
   cardId: PropTypes.string.isRequired,
-  comments: PropTypes.arrayOf(PropTypes.shape({
-    author: PropTypes.string,
-    cardId: PropTypes.string,
-    id: PropTypes.string,
-    value: PropTypes.string
-  })).isRequired,
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      author: PropTypes.string,
+      cardId: PropTypes.string,
+      id: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  ).isRequired,
   onDelete: PropTypes.func,
-  onChangeClick: PropTypes.func
-}
+  onChangeClick: PropTypes.func,
+};

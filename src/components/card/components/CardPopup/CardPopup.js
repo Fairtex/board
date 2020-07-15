@@ -1,9 +1,11 @@
 import React from 'react';
-import Description from '../Description';
+import PropTypes from 'prop-types';
+
 import CommentsBlock from '../../../CommentBlock';
 import Button from '../../../UIKit/Button';
 import ChangeInput from '../../../UIKit/ChangeInput';
-import PropTypes from 'prop-types';
+import Description from '../Description';
+
 import './cardPopup.css';
 
 export default class CardPopup extends React.Component {
@@ -27,7 +29,7 @@ export default class CardPopup extends React.Component {
     window.removeEventListener('keyup', this.keyUpHandler);
   }
 
-  keyDownHandler = (e) => {
+  keyDownHandler = e => {
     if (e.key === 'Escape' && !this.isKeyPressed) {
       this.props.onCloseBtnClick(e);
       this.isKeyPressed = true;
@@ -39,7 +41,7 @@ export default class CardPopup extends React.Component {
   };
 
   toggleChangeName = () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       isNameChanged: !state.isNameChanged,
     }));
   };
@@ -72,10 +74,7 @@ export default class CardPopup extends React.Component {
           <header className="card-popup__header">
             {isAuthor ? (
               !isNameChanged ? (
-                <h3
-                  className="card-popup__title"
-                  onClick={this.toggleChangeName}
-                >
+                <h3 className="card-popup__title" onClick={this.toggleChangeName}>
                   <i className="fa fa-list-alt"></i>
                   {cardName}
                 </h3>
@@ -98,7 +97,7 @@ export default class CardPopup extends React.Component {
             <Button
               type="button"
               className="card-popup__close-btn close"
-              onClick={(e) => onCloseBtnClick(e)}
+              onClick={e => onCloseBtnClick(e)}
             >
               <i className="fa fa-times"></i>
             </Button>
@@ -143,13 +142,15 @@ CardPopup.propTypes = {
   onChangeName: PropTypes.func,
   onDeleteBtnClick: PropTypes.func,
   changeDescription: PropTypes.func,
-  comments: PropTypes.arrayOf(PropTypes.shape({
-    author: PropTypes.string,
-    cardId: PropTypes.string,
-    id: PropTypes.string,
-    value: PropTypes.string
-  })),
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      author: PropTypes.string,
+      cardId: PropTypes.string,
+      id: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  ),
   addComment: PropTypes.func,
   deleteComment: PropTypes.func,
-  changeComment: PropTypes.func
-}
+  changeComment: PropTypes.func,
+};

@@ -1,6 +1,8 @@
 import React from 'react';
-import CardPopup from './components/CardPopup';
 import PropTypes from 'prop-types';
+
+import CardPopup from './components/CardPopup';
+
 import './card.css';
 
 export default class Card extends React.Component {
@@ -18,7 +20,7 @@ export default class Card extends React.Component {
     }));
   };
 
-  closePopup = (e) => {
+  closePopup = e => {
     e.stopPropagation();
     this.setState(() => ({
       isOpened: false,
@@ -86,16 +88,18 @@ Card.propTypes = {
   cardId: PropTypes.string.isRequired,
   cardDescription: PropTypes.string,
   onDeleteBtnClick: PropTypes.func,
-  comments: PropTypes.arrayOf(PropTypes.shape({
-    author: PropTypes.string,
-    cardId: PropTypes.string,
-    id: PropTypes.string,
-    value: PropTypes.string
-  })),
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      author: PropTypes.string,
+      cardId: PropTypes.string,
+      id: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  ),
   commentsNumber: PropTypes.number,
   changeCardName: PropTypes.func,
   changeDescription: PropTypes.func,
   addComment: PropTypes.func,
   deleteComment: PropTypes.func,
-  changeComment: PropTypes.func
-}
+  changeComment: PropTypes.func,
+};

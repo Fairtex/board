@@ -1,8 +1,10 @@
 import React from 'react';
-import Button from '../../../UIKit/Button';
-import './comment.css';
-import ChangeForm from '../../../UIKit/ChangeForm';
 import PropTypes from 'prop-types';
+
+import Button from '../../../UIKit/Button';
+import ChangeForm from '../../../UIKit/ChangeForm';
+
+import './comment.css';
 
 export default class Comment extends React.Component {
   constructor(props) {
@@ -14,7 +16,7 @@ export default class Comment extends React.Component {
   }
 
   toggleChangeCommForm = () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       isOnChange: !state.isOnChange,
     }));
   };
@@ -74,5 +76,5 @@ Comment.propTypes = {
   commAuthor: PropTypes.string.isRequired,
   commValue: PropTypes.string,
   onDeleteClick: PropTypes.func.isRequired,
-  onChangeClick: PropTypes.func.isRequired
-}
+  onChangeClick: PropTypes.func.isRequired,
+};

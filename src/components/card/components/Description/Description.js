@@ -1,6 +1,8 @@
 import React from 'react';
-import ChangeForm from '../../../UIKit/ChangeForm';
 import PropTypes from 'prop-types';
+
+import ChangeForm from '../../../UIKit/ChangeForm';
+
 import './description.css';
 
 export default class Description extends React.Component {
@@ -12,7 +14,7 @@ export default class Description extends React.Component {
   }
 
   changeField = () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       isOnChange: !state.isOnChange,
     }));
   };
@@ -45,5 +47,5 @@ export default class Description extends React.Component {
 Description.propTypes = {
   text: PropTypes.string,
   cardId: PropTypes.string.isRequired,
-  onChangeDesc: PropTypes.func.isRequired
-}
+  onChangeDesc: PropTypes.func.isRequired,
+};

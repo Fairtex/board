@@ -1,26 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { v1 as uuid } from 'uuid';
+
+import changeValue from '../../utils/utils';
 import Board from './components/Board';
 import EnterPopup from './components/EnterPopup';
 import Header from './components/Header';
-import { v1 as uuid } from 'uuid';
-import changeValue from '../../utils/utils';
 
-const startColumns = [
-  { name: 'toDo', id: 1 },
-  { name: 'Progress', id: 2 },
-  { name: 'Test', id: 3 },
-  { name: 'Done', id: 4 },
-];
+// const startColumns = [
+//   { name: 'toDo', id: 1 },
+//   { name: 'Progress', id: 2 },
+//   { name: 'Test', id: 3 },
+//   { name: 'Done', id: 4 },
+// ];
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isAuthorized: false,
       user: localStorage.getItem('user'),
-      columns: localStorage.getItem('columns')
-        ? JSON.parse(localStorage.getItem('columns'))
-        : startColumns,
+      // columns: localStorage.getItem('columns')
+      //   ? JSON.parse(localStorage.getItem('columns'))
+      //   : startColumns,
       cards: localStorage.getItem(`cards`)
         ? JSON.parse(localStorage.getItem(`cards`))
         : [],
@@ -39,32 +42,8 @@ export default class App extends React.Component {
     }
   }
 
-  addCard = (columnId, value) => {
-    if (value) {
-      let newCards = localStorage.getItem(`cards`)
-        ? JSON.parse(localStorage.getItem(`cards`))
-        : [];
-
-      newCards.push({
-        value: value,
-        author: localStorage.getItem('user'),
-        columnId: columnId,
-        id: uuid(),
-        description: '',
-      });
-      this.setState(() => ({
-        cards: newCards,
-      }));
-      localStorage.setItem(`cards`, JSON.stringify(newCards));
-    } else {
-      console.log('Enter card name!');
-    }
-  };
-
-  deleteCard = (id) => {
-    const newCards = JSON.parse(localStorage.getItem('cards')).filter(
-      (el) => el.id !== id,
-    );
+  deleteCard = id => {
+    const newCards = JSON.parse(localStorage.getItem('cards')).filter(el => el.id !== id);
     this.setState(() => ({
       cards: newCards,
     }));
@@ -92,9 +71,9 @@ export default class App extends React.Component {
     }
   };
 
-  deleteComment = (id) => {
+  deleteComment = id => {
     const newComments = JSON.parse(localStorage.getItem('comments')).filter(
-      (el) => el.id !== id,
+      el => el.id !== id,
     );
     this.setState(() => ({
       comments: newComments,
@@ -103,10 +82,7 @@ export default class App extends React.Component {
   };
 
   changeCardName = (cardId, value) => {
-    if (
-      value &&
-      value !== this.state.cards.find((item) => item.id === cardId).name
-    ) {
+    if (value && value !== this.state.cards.find(item => item.id === cardId).name) {
       const cards = changeValue('cards', 'value', cardId, value);
       this.setState(() => ({
         cards,
@@ -117,7 +93,7 @@ export default class App extends React.Component {
   changeDescription = (cardId, value) => {
     if (
       value &&
-      value !== this.state.cards.find((item) => item.id === cardId).description
+      value !== this.state.cards.find(item => item.id === cardId).description
     ) {
       const cards = changeValue('cards', 'description', cardId, value);
       this.setState(() => ({
@@ -126,23 +102,17 @@ export default class App extends React.Component {
     }
   };
 
-  changeColumnName = (columnId, value) => {
-    if (
-      value &&
-      value !== this.state.columns.find((item) => item.id === columnId).name
-    ) {
-      const columns = changeValue('columns', 'name', columnId, value);
-      this.setState(() => ({
-        columns,
-      }));
-    }
-  };
+  // changeColumnName = (columnId, value) => {
+  //   if (value && value !== this.state.columns.find(item => item.id === columnId).name) {
+  //     const columns = changeValue('columns', 'name', columnId, value);
+  //     this.setState(() => ({
+  //       columns,
+  //     }));
+  //   }
+  // };
 
   changeComment = (commId, value) => {
-    if (
-      value &&
-      value !== this.state.comments.find((item) => item.id === commId).value
-    ) {
+    if (value && value !== this.state.comments.find(item => item.id === commId).value) {
       const comments = changeValue('comments', 'value', commId, value);
       this.setState(() => ({
         comments,
@@ -152,7 +122,7 @@ export default class App extends React.Component {
 
   logoutUser = () => {
     localStorage.removeItem('user');
-    this.setState((state) => ({
+    this.setState(state => ({
       isAuthorized: !state.isAuthorized,
       user: localStorage.getItem('user'),
     }));
@@ -160,32 +130,29 @@ export default class App extends React.Component {
 
   unauthorizedEnter = () => {
     localStorage.setItem('user', 'guest');
-    this.setState((state) => ({
+    this.setState(state => ({
       isAuthorized: !state.isAuthorized,
       user: localStorage.getItem('user'),
     }));
   };
 
-  authorizedEnter = (name) => {
+  authorizedEnter = name => {
     localStorage.setItem('user', name);
-    this.setState((state) => ({
+    this.setState(state => ({
       isAuthorized: !state.isAuthorized,
       user: name,
     }));
-  }
+  };
 
   render() {
-    const { user, isAuthorized, columns, cards, comments } = this.state;
-    if (!localStorage.getItem('columns')) {
-      localStorage.setItem('columns', JSON.stringify(columns));
-    }
+    const { user, isAuthorized, cards, comments } = this.state;
+    const { columns } = this.props;
+    // if (!localStorage.getItem('columns')) {
+    //   localStorage.setItem('columns', JSON.stringify(columns));
+    // }
     return (
       <div className="work-board">
-        <Header
-          title="Work board"
-          user={user}
-          onExitBtnClick={this.logoutUser}
-        />
+        <Header title="Work board" user={user} onExitBtnClick={this.logoutUser} />
         <EnterPopup
           isAuthorized={isAuthorized}
           onEnter={this.authorizedEnter}
@@ -209,3 +176,21 @@ export default class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    columns: state.columns,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      // addCard,
+      // renameColumn,
+    },
+    dispatch,
+  ),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import './addCardForm.css';
 
 export default class AddCardForm extends React.Component {
@@ -10,16 +11,16 @@ export default class AddCardForm extends React.Component {
     this.newCardRef = React.createRef();
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     this.newCardName = e.target.value;
   };
 
-  handleAddCard = (e) => {
+  handleAddCard = e => {
     e.preventDefault();
     const { onSubmit } = this.props;
     onSubmit(this.newCardName);
     this.newCardRef.current.value = '';
-  }
+  };
 
   render() {
     return (
@@ -35,10 +36,10 @@ export default class AddCardForm extends React.Component {
           <i className="fa fa-plus"></i>
         </button>
       </form>
-    )
+    );
   }
 }
 
 AddCardForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-}
+  onSubmit: PropTypes.func.isRequired,
+};

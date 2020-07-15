@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import './changeForm.css';
 
 const ChangeForm = ({ currentValue, itemId, onSubmit, onCloseBtnClick }) => {
   let newValue = currentValue;
 
-  const handlerInputChange = (e) => {
+  const handlerInputChange = e => {
     newValue = e.target.value;
   };
 
-  const handleChangeDesc = (e) => {
+  const handleChangeDesc = e => {
     e.preventDefault();
     onSubmit(itemId, newValue);
     onCloseBtnClick();
@@ -38,7 +39,7 @@ ChangeForm.propTypes = {
   currentValue: PropTypes.string,
   itemId: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onCloseBtnClick: PropTypes.func.isRequired
-}
+  onCloseBtnClick: PropTypes.func.isRequired,
+};
 
 export default ChangeForm;

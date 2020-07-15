@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import './enterPopup.css';
 
 const EnterPopup = ({ isAuthorized, onEnter, onClose }) => {
   let userName = '';
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     userName = e.target.value;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = e => {
     e.preventDefault();
     if (userName) {
-      onEnter(userName)
+      onEnter(userName);
     }
   };
 
@@ -47,7 +48,7 @@ const EnterPopup = ({ isAuthorized, onEnter, onClose }) => {
 
 EnterPopup.propTypes = {
   isAuthorized: PropTypes.bool,
-  onEnter: PropTypes.func
-}
+  onEnter: PropTypes.func,
+};
 
 export default EnterPopup;
