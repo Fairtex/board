@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Card from '../../../card';
+import Card from '../card';
 
 import './cardList.css';
 

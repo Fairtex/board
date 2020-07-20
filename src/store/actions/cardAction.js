@@ -9,7 +9,7 @@ export const addCard = card => ({ type: ADD_CARD, payload: { card } });
 
 export const deleteCard = id => ({ type: DELETE_CARD, payload: { id } });
 
-export const renameCard = (id, name) => ({ type: RENAME_CARD, payload: { id, name } });
+export const renameCard = (id, value) => ({ type: RENAME_CARD, payload: { id, value } });
 
 export const changeDescription = (id, description) => ({
   type: CHANGE_CARD_DESCRIPTION,

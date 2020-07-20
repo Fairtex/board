@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CommentList from './components/CommentList';
+import CommentList from '../CommentList';
 
 import './commentsBlock.css';
 

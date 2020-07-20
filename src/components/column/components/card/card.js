@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CardPopup from './components/CardPopup';
+import CardPopup from '../../../CardPopup';
 
 import './card.css';
 
@@ -45,6 +45,7 @@ export default class Card extends React.Component {
       changeComment,
     } = this.props;
     const { isOpened } = this.state;
+
     return (
       <li>
         <div className={className}>

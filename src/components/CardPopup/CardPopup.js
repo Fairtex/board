@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import CommentsBlock from '../../../CommentBlock';
-import Button from '../../../UIKit/Button';
-import ChangeInput from '../../../UIKit/ChangeInput';
-import Description from '../Description';
+import {
+  changeDescription,
+  deleteCard,
+  renameCard,
+} from '../../store/actions/cardAction';
+import CommentsBlock from './components/CommentBlock';
+import Description from './components/Description';
+import PopupHeader from './components/PopupHeader';
 
 import './cardPopup.css';
 
-export default class CardPopup extends React.Component {
+class CardPopup extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isNameChanged: false,
-    };
-
     this.isKeyPressed = false;
   }
 
@@ -40,17 +41,6 @@ export default class CardPopup extends React.Component {
     this.isKeyPressed = false;
   };
 
-  toggleChangeName = () => {
-    this.setState(state => ({
-      isNameChanged: !state.isNameChanged,
-    }));
-  };
-
-  changeCardName = (id, value) => {
-    this.props.onChangeName(id, value);
-    this.toggleChangeName();
-  };
-
   render() {
     const {
       user,
@@ -60,57 +50,26 @@ export default class CardPopup extends React.Component {
       cardId,
       comments,
       onCloseBtnClick,
-      onDeleteBtnClick,
+      deleteCard,
       changeDescription,
       addComment,
       deleteComment,
       changeComment,
+      renameCard,
     } = this.props;
-    const { isNameChanged } = this.state;
     const isAuthor = cardAuthor === user;
     return (
       <div className="card-overlay">
         <div className="card-popup">
-          <header className="card-popup__header">
-            {isAuthor ? (
-              !isNameChanged ? (
-                <h3 className="card-popup__title" onClick={this.toggleChangeName}>
-                  <i className="fa fa-list-alt"></i>
-                  {cardName}
-                </h3>
-              ) : (
-                <ChangeInput
-                  defaultValue={cardName}
-                  onEnter={this.changeCardName}
-                  targetId={cardId}
-                />
-              )
-            ) : (
-              <h3 className="card-popup__title">
-                <i className="fa fa-list-alt"></i>
-                {cardName}
-              </h3>
-            )}
-            <div className="card-popup__author">
-              <i className="fa fa-user"></i> {cardAuthor}
-            </div>
-            <Button
-              type="button"
-              className="card-popup__close-btn close"
-              onClick={e => onCloseBtnClick(e)}
-            >
-              <i className="fa fa-times"></i>
-            </Button>
-            {isAuthor && (
-              <Button
-                type="button"
-                className="card-popup__delete-btn btn btn-danger"
-                onClick={() => onDeleteBtnClick(cardId)}
-              >
-                <i className="fa fa-trash"></i>
-              </Button>
-            )}
-          </header>
+          <PopupHeader
+            isAuthor={isAuthor}
+            cardName={cardName}
+            cardId={cardId}
+            cardAuthor={cardAuthor}
+            onCloseBtnClick={onCloseBtnClick}
+            onDeleteBtnClick={deleteCard}
+            onChangeName={renameCard}
+          />
           <div className="modal-body">
             <Description
               text={cardDescription}
@@ -154,3 +113,22 @@ CardPopup.propTypes = {
   deleteComment: PropTypes.func,
   changeComment: PropTypes.func,
 };
+
+const mapStateToProps = state => {
+  return {
+    cards: state.cards,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      changeDescription,
+      deleteCard,
+      renameCard,
+    },
+    dispatch,
+  ),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardPopup);

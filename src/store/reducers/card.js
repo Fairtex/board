@@ -13,7 +13,8 @@ export function cards(state = [], { type, payload }) {
     }
     case DELETE_CARD: {
       console.log(payload);
-      return [...state, state.cards.filter(el => el.id !== payload.id)];
+      const newState = state.filter(el => el.id !== payload.id);
+      return newState;
     }
     case RENAME_CARD: {
       console.log(payload);
