@@ -3,10 +3,10 @@ import { v1 as uuid } from 'uuid';
 import { RENAME_COLUMN } from '../actionTypes';
 
 const initialState = [
-  { name: 'toDo', id: 1 },
-  { name: 'Progress', id: 2 },
-  { name: 'Test', id: 3 },
-  { name: 'Done', id: 4 },
+  { name: 'toDo', id: uuid() },
+  { name: 'Progress', id: uuid() },
+  { name: 'Test', id: uuid() },
+  { name: 'Done', id: uuid() },
 ];
 
 export function columns(state = initialState, { type, payload }) {

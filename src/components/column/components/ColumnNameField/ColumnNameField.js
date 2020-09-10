@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+// import PropTypes from 'prop-types';
 import ChangeInput from '../../../UIKit/ChangeInput';
 
 import './columnNameField.css';
@@ -48,8 +48,8 @@ export default class ColumnNameField extends React.Component {
   }
 }
 
-ColumnNameField.propTypes = {
-  changeColumnName: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  columnId: PropTypes.string.isRequired,
-};
+// ColumnNameField.propTypes = {
+//   changeColumnName: PropTypes.func.isRequired,
+//   name: PropTypes.string.isRequired,
+//   columnId: PropTypes.string.isRequired,
+// };

@@ -1,19 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { v1 as uuid } from 'uuid';
 
-import changeValue from '../../utils/utils';
+import {
+  authorizedEnter,
+  unAuthorizedEnter,
+  userExit,
+} from '../../store/actions/authorityActions';
 import Board from './components/Board';
 import EnterPopup from './components/EnterPopup';
 import Header from './components/Header';
-
-// const startColumns = [
-//   { name: 'toDo', id: 1 },
-//   { name: 'Progress', id: 2 },
-//   { name: 'Test', id: 3 },
-//   { name: 'Done', id: 4 },
-// ];
 
 class App extends React.Component {
   constructor(props) {
@@ -21,9 +17,6 @@ class App extends React.Component {
     this.state = {
       isAuthorized: false,
       user: localStorage.getItem('user'),
-      // columns: localStorage.getItem('columns')
-      //   ? JSON.parse(localStorage.getItem('columns'))
-      //   : startColumns,
       cards: localStorage.getItem(`cards`)
         ? JSON.parse(localStorage.getItem(`cards`))
         : [],
@@ -41,84 +34,6 @@ class App extends React.Component {
       }));
     }
   }
-
-  deleteCard = id => {
-    const newCards = JSON.parse(localStorage.getItem('cards')).filter(el => el.id !== id);
-    this.setState(() => ({
-      cards: newCards,
-    }));
-    localStorage.setItem(`cards`, JSON.stringify(newCards));
-  };
-
-  addComment = (cardId, value) => {
-    if (value) {
-      let newComments = localStorage.getItem(`comments`)
-        ? JSON.parse(localStorage.getItem(`comments`))
-        : [];
-
-      newComments.unshift({
-        id: uuid(),
-        cardId: cardId,
-        value: value,
-        author: localStorage.getItem('user') || 'guest',
-      });
-      this.setState(() => ({
-        comments: newComments,
-      }));
-      localStorage.setItem(`comments`, JSON.stringify(newComments));
-    } else {
-      console.log('Enter comment text!');
-    }
-  };
-
-  deleteComment = id => {
-    const newComments = JSON.parse(localStorage.getItem('comments')).filter(
-      el => el.id !== id,
-    );
-    this.setState(() => ({
-      comments: newComments,
-    }));
-    localStorage.setItem(`comments`, JSON.stringify(newComments));
-  };
-
-  changeCardName = (cardId, value) => {
-    if (value && value !== this.state.cards.find(item => item.id === cardId).name) {
-      const cards = changeValue('cards', 'value', cardId, value);
-      this.setState(() => ({
-        cards,
-      }));
-    }
-  };
-
-  changeDescription = (cardId, value) => {
-    if (
-      value &&
-      value !== this.state.cards.find(item => item.id === cardId).description
-    ) {
-      const cards = changeValue('cards', 'description', cardId, value);
-      this.setState(() => ({
-        cards,
-      }));
-    }
-  };
-
-  // changeColumnName = (columnId, value) => {
-  //   if (value && value !== this.state.columns.find(item => item.id === columnId).name) {
-  //     const columns = changeValue('columns', 'name', columnId, value);
-  //     this.setState(() => ({
-  //       columns,
-  //     }));
-  //   }
-  // };
-
-  changeComment = (commId, value) => {
-    if (value && value !== this.state.comments.find(item => item.id === commId).value) {
-      const comments = changeValue('comments', 'value', commId, value);
-      this.setState(() => ({
-        comments,
-      }));
-    }
-  };
 
   logoutUser = () => {
     localStorage.removeItem('user');
@@ -145,33 +60,17 @@ class App extends React.Component {
   };
 
   render() {
-    const { user, isAuthorized, cards, comments } = this.state;
-    const { columns } = this.props;
-    // if (!localStorage.getItem('columns')) {
-    //   localStorage.setItem('columns', JSON.stringify(columns));
-    // }
+    const { user, cards, comments } = this.state;
+    const { columns, auth, authorizedEnter, unAuthorizedEnter, userExit } = this.props;
     return (
       <div className="work-board">
-        <Header title="Work board" user={user} onExitBtnClick={this.logoutUser} />
+        <Header title="Work board" user={auth} onExitBtnClick={userExit} />
         <EnterPopup
-          isAuthorized={isAuthorized}
-          onEnter={this.authorizedEnter}
-          onClose={this.unauthorizedEnter}
+          isAuthorized={auth ? true : false}
+          onEnter={authorizedEnter}
+          onClose={unAuthorizedEnter}
         />
-        <Board
-          user={user}
-          columns={columns}
-          cards={cards}
-          comments={comments}
-          addCard={this.addCard}
-          deleteCard={this.deleteCard}
-          addComment={this.addComment}
-          deleteComment={this.deleteComment}
-          changeColumnName={this.changeColumnName}
-          changeCardName={this.changeCardName}
-          changeDescription={this.changeDescription}
-          changeComment={this.changeComment}
-        />
+        <Board user={user} columns={columns} cards={cards} comments={comments} />
       </div>
     );
   }
@@ -180,14 +79,16 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
     columns: state.columns,
+    auth: state.authorization,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(
     {
-      // addCard,
-      // renameColumn,
+      authorizedEnter,
+      unAuthorizedEnter,
+      userExit,
     },
     dispatch,
   ),

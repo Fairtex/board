@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+// import PropTypes from 'prop-types';
 import Column from '../../../column';
 
 import './board.css';
@@ -46,39 +46,39 @@ const Board = ({
   );
 };
 
-Board.propTypes = {
-  user: PropTypes.string,
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      id: PropTypes.string,
-    }),
-  ).isRequired,
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      author: PropTypes.string,
-      columnId: PropTypes.string,
-      id: PropTypes.string,
-      description: PropTypes.string,
-    }),
-  ),
-  addCard: PropTypes.func,
-  deleteCard: PropTypes.func,
-  changeColumnName: PropTypes.func,
-  changeCardName: PropTypes.func,
-  changeDescription: PropTypes.func,
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      author: PropTypes.string,
-      cardId: PropTypes.string,
-      id: PropTypes.string,
-      value: PropTypes.string,
-    }),
-  ),
-  addComment: PropTypes.func,
-  deleteComment: PropTypes.func,
-  changeComment: PropTypes.func,
-};
+// Board.propTypes = {
+//   user: PropTypes.string,
+//   columns: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       name: PropTypes.string,
+//       id: PropTypes.string,
+//     }),
+//   ).isRequired,
+//   cards: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       value: PropTypes.string,
+//       author: PropTypes.string,
+//       columnId: PropTypes.string,
+//       id: PropTypes.string,
+//       description: PropTypes.string,
+//     }),
+//   ),
+//   addCard: PropTypes.func,
+//   deleteCard: PropTypes.func,
+//   changeColumnName: PropTypes.func,
+//   changeCardName: PropTypes.func,
+//   changeDescription: PropTypes.func,
+//   comments: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       author: PropTypes.string,
+//       cardId: PropTypes.string,
+//       id: PropTypes.string,
+//       value: PropTypes.string,
+//     }),
+//   ),
+//   addComment: PropTypes.func,
+//   deleteComment: PropTypes.func,
+//   changeComment: PropTypes.func,
+// };
 
 export default Board;

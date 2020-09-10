@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+// import PropTypes from 'prop-types';
 import Button from '../../../UIKit/Button';
 import ChangeForm from '../../../UIKit/ChangeForm';
 
@@ -22,14 +22,7 @@ export default class Comment extends React.Component {
   };
 
   render() {
-    const {
-      user,
-      commValue,
-      commAuthor,
-      commId,
-      onDeleteClick,
-      onChangeClick,
-    } = this.props;
+    const { user, commValue, commAuthor, commId, onDelete, onChange } = this.props;
     const { isOnChange } = this.state;
     const isAuthor = commAuthor === user;
     return (
@@ -38,7 +31,7 @@ export default class Comment extends React.Component {
           <ChangeForm
             currentValue={commValue}
             itemId={commId}
-            onSubmit={onChangeClick}
+            onSubmit={onChange}
             onCloseBtnClick={this.toggleChangeCommForm}
           />
         ) : (
@@ -50,7 +43,7 @@ export default class Comment extends React.Component {
                 <Button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => onDeleteClick(commId)}
+                  onClick={() => onDelete(commId)}
                 >
                   Delete
                 </Button>
@@ -70,11 +63,11 @@ export default class Comment extends React.Component {
   }
 }
 
-Comment.propTypes = {
-  user: PropTypes.string.isRequired,
-  commId: PropTypes.string.isRequired,
-  commAuthor: PropTypes.string.isRequired,
-  commValue: PropTypes.string,
-  onDeleteClick: PropTypes.func.isRequired,
-  onChangeClick: PropTypes.func.isRequired,
-};
+// Comment.propTypes = {
+//   user: PropTypes.string.isRequired,
+//   commId: PropTypes.string.isRequired,
+//   commAuthor: PropTypes.string.isRequired,
+//   commValue: PropTypes.string,
+//   onDeleteClick: PropTypes.func.isRequired,
+//   onChangeClick: PropTypes.func.isRequired,
+// };

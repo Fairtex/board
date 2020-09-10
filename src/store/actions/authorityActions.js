@@ -4,12 +4,11 @@ export const userExit = () => ({
   type: USER_EXIT,
 });
 
-export const authorizedEnter = userName => ({
+export const authorizedEnter = user => ({
   type: AUTH_ENTER,
-  payload: { userName },
+  payload: { user },
 });
 
 export const unAuthorizedEnter = () => ({
   type: NO_AUTH_ENTER,
-  payload: 'guest',
 });

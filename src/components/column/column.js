@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { v1 as uuid } from 'uuid';
@@ -66,36 +66,36 @@ class Column extends React.Component {
   }
 }
 
-Column.propTypes = {
-  user: PropTypes.string,
-  columnId: PropTypes.string,
-  name: PropTypes.string,
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      author: PropTypes.string,
-      columnId: PropTypes.string,
-      id: PropTypes.string,
-      description: PropTypes.string,
-    }),
-  ),
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      author: PropTypes.string,
-      cardId: PropTypes.string,
-      id: PropTypes.string,
-      value: PropTypes.string,
-    }),
-  ),
-  changeColumnName: PropTypes.func.isRequired,
-  addCard: PropTypes.func.isRequired,
-  deleteCard: PropTypes.func,
-  changeCardName: PropTypes.func,
-  changeDescription: PropTypes.func,
-  addComment: PropTypes.func,
-  deleteComment: PropTypes.func,
-  changeComment: PropTypes.func,
-};
+// Column.propTypes = {
+//   user: PropTypes.string,
+//   columnId: PropTypes.string,
+//   name: PropTypes.string,
+//   cards: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       value: PropTypes.string,
+//       author: PropTypes.string,
+//       columnId: PropTypes.string,
+//       id: PropTypes.string,
+//       description: PropTypes.string,
+//     }),
+//   ),
+//   comments: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       author: PropTypes.string,
+//       cardId: PropTypes.string,
+//       id: PropTypes.string,
+//       value: PropTypes.string,
+//     }),
+//   ),
+//   changeColumnName: PropTypes.func.isRequired,
+//   addCard: PropTypes.func.isRequired,
+//   deleteCard: PropTypes.func,
+//   changeCardName: PropTypes.func,
+//   changeDescription: PropTypes.func,
+//   addComment: PropTypes.func,
+//   deleteComment: PropTypes.func,
+//   changeComment: PropTypes.func,
+// };
 
 const mapStateToProps = state => {
   return {

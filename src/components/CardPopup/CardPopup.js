@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -48,13 +48,9 @@ class CardPopup extends React.Component {
       cardAuthor,
       cardDescription,
       cardId,
-      comments,
       onCloseBtnClick,
       deleteCard,
       changeDescription,
-      addComment,
-      deleteComment,
-      changeComment,
       renameCard,
     } = this.props;
     const isAuthor = cardAuthor === user;
@@ -77,42 +73,35 @@ class CardPopup extends React.Component {
               onChangeDesc={changeDescription}
             />
           </div>
-          <CommentsBlock
-            user={user}
-            comments={comments}
-            cardId={cardId}
-            addComment={addComment}
-            deleteComment={deleteComment}
-            changeComment={changeComment}
-          />
+          <CommentsBlock user={user} cardId={cardId} />
         </div>
       </div>
     );
   }
 }
 
-CardPopup.propTypes = {
-  user: PropTypes.string,
-  cardName: PropTypes.string.isRequired,
-  cardAuthor: PropTypes.string.isRequired,
-  cardId: PropTypes.string.isRequired,
-  cardDescription: PropTypes.string,
-  onCloseBtnClick: PropTypes.func.isRequired,
-  onChangeName: PropTypes.func,
-  onDeleteBtnClick: PropTypes.func,
-  changeDescription: PropTypes.func,
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      author: PropTypes.string,
-      cardId: PropTypes.string,
-      id: PropTypes.string,
-      value: PropTypes.string,
-    }),
-  ),
-  addComment: PropTypes.func,
-  deleteComment: PropTypes.func,
-  changeComment: PropTypes.func,
-};
+// CardPopup.propTypes = {
+//   user: PropTypes.string,
+//   cardName: PropTypes.string.isRequired,
+//   cardAuthor: PropTypes.string.isRequired,
+//   cardId: PropTypes.string.isRequired,
+//   cardDescription: PropTypes.string,
+//   onCloseBtnClick: PropTypes.func.isRequired,
+//   onChangeName: PropTypes.func,
+//   onDeleteBtnClick: PropTypes.func,
+//   changeDescription: PropTypes.func,
+//   comments: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       author: PropTypes.string,
+//       cardId: PropTypes.string,
+//       id: PropTypes.string,
+//       value: PropTypes.string,
+//     }),
+//   ),
+//   addComment: PropTypes.func,
+//   deleteComment: PropTypes.func,
+//   changeComment: PropTypes.func,
+// };
 
 const mapStateToProps = state => {
   return {

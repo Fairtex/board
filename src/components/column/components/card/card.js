@@ -81,26 +81,26 @@ export default class Card extends React.Component {
   }
 }
 
-Card.propTypes = {
-  user: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  cardContent: PropTypes.string.isRequired,
-  cardAuthor: PropTypes.string.isRequired,
-  cardId: PropTypes.string.isRequired,
-  cardDescription: PropTypes.string,
-  onDeleteBtnClick: PropTypes.func,
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      author: PropTypes.string,
-      cardId: PropTypes.string,
-      id: PropTypes.string,
-      value: PropTypes.string,
-    }),
-  ),
-  commentsNumber: PropTypes.number,
-  changeCardName: PropTypes.func,
-  changeDescription: PropTypes.func,
-  addComment: PropTypes.func,
-  deleteComment: PropTypes.func,
-  changeComment: PropTypes.func,
-};
+// Card.propTypes = {
+//   user: PropTypes.string.isRequired,
+//   className: PropTypes.string,
+//   cardContent: PropTypes.string.isRequired,
+//   cardAuthor: PropTypes.string.isRequired,
+//   cardId: PropTypes.string.isRequired,
+//   cardDescription: PropTypes.string,
+//   onDeleteBtnClick: PropTypes.func,
+//   comments: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       author: PropTypes.string,
+//       cardId: PropTypes.string,
+//       id: PropTypes.string,
+//       value: PropTypes.string,
+//     }),
+//   ),
+//   commentsNumber: PropTypes.number,
+//   changeCardName: PropTypes.func,
+//   changeDescription: PropTypes.func,
+//   addComment: PropTypes.func,
+//   deleteComment: PropTypes.func,
+//   changeComment: PropTypes.func,
+// };

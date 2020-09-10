@@ -5,7 +5,7 @@ import Comment from '../Comment';
 
 import './commentList.css';
 
-const CommentList = ({ user, comments, cardId, onDelete, onChangeClick }) => {
+const CommentList = ({ user, comments, cardId, deleteComment, changeComment }) => {
   const currComments = comments.filter(el => el.cardId === cardId);
 
   return (
@@ -19,8 +19,8 @@ const CommentList = ({ user, comments, cardId, onDelete, onChangeClick }) => {
             commId={id}
             commAuthor={author}
             commValue={value}
-            onDeleteClick={onDelete}
-            onChangeClick={onChangeClick}
+            onDelete={deleteComment}
+            onChange={changeComment}
           />
         );
       })}

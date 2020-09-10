@@ -1,11 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { v1 as uuid } from 'uuid';
 
+import {
+  addComment,
+  changeComment,
+  deleteComment,
+} from '../../../../store/actions/commentActions';
+import getCommentsByCard from '../../../../store/selectors/getCommentsByCard';
 import CommentList from '../CommentList';
 
 import './commentsBlock.css';
 
-export default class CommentsBlock extends React.Component {
+class CommentsBlock extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,11 +26,21 @@ export default class CommentsBlock extends React.Component {
     this.commentText = e.target.value;
   };
 
-  onSubmit = e => {
+  handleAddCard = e => {
     e.preventDefault();
-    const { cardId, addComment } = this.props;
-    addComment(cardId, this.commentText);
-    this.addCommRef.current.value = '';
+    if (this.commentText) {
+      const { cardId, addComment } = this.props;
+      const newComm = {
+        id: uuid(),
+        cardId: cardId,
+        author: localStorage.getItem('user') || 'guest',
+        value: this.commentText,
+      };
+      addComment(newComm);
+      this.addCommRef.current.value = '';
+    } else {
+      console.log('Enter comment text!');
+    }
   };
 
   render() {
@@ -31,7 +50,7 @@ export default class CommentsBlock extends React.Component {
         <div className="comments__title">
           <i className="fa fa-list"></i> Comments
         </div>
-        <form className="comments__form" onSubmit={this.onSubmit}>
+        <form className="comments__form" onSubmit={this.handleAddCard}>
           <textarea
             className="comments__textarea"
             rows="2"
@@ -47,26 +66,45 @@ export default class CommentsBlock extends React.Component {
           user={user}
           cardId={cardId}
           comments={comments}
-          onDelete={deleteComment}
-          onChangeClick={changeComment}
+          deleteComment={deleteComment}
+          changeComment={changeComment}
         />
       </div>
     );
   }
 }
 
-CommentsBlock.propTypes = {
-  user: PropTypes.string,
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      author: PropTypes.string,
-      cardId: PropTypes.string,
-      id: PropTypes.string,
-      value: PropTypes.string,
-    }),
-  ),
-  cardId: PropTypes.string.isRequired,
-  addComment: PropTypes.func,
-  deleteComment: PropTypes.func,
-  changeComment: PropTypes.func,
+const mapStateToProps = (state, props) => {
+  return {
+    comments: getCommentsByCard(state, props.cardId),
+  };
 };
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      addComment,
+      changeComment,
+      deleteComment,
+    },
+    dispatch,
+  ),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentsBlock);
+
+// CommentsBlock.propTypes = {
+//   user: PropTypes.string,
+//   comments: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       author: PropTypes.string,
+//       cardId: PropTypes.string,
+//       id: PropTypes.string,
+//       value: PropTypes.string,
+//     }),
+//   ),
+//   cardId: PropTypes.string.isRequired,
+//   addComment: PropTypes.func,
+//   deleteComment: PropTypes.func,
+//   changeComment: PropTypes.func,
+// };
