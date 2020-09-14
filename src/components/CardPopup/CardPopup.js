@@ -1,5 +1,6 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -73,39 +74,35 @@ class CardPopup extends React.Component {
               onChangeDesc={changeDescription}
             />
           </div>
-          <CommentsBlock user={user} cardId={cardId} />
+          <CommentsBlock cardId={cardId} />
         </div>
       </div>
     );
   }
 }
 
-// CardPopup.propTypes = {
-//   user: PropTypes.string,
-//   cardName: PropTypes.string.isRequired,
-//   cardAuthor: PropTypes.string.isRequired,
-//   cardId: PropTypes.string.isRequired,
-//   cardDescription: PropTypes.string,
-//   onCloseBtnClick: PropTypes.func.isRequired,
-//   onChangeName: PropTypes.func,
-//   onDeleteBtnClick: PropTypes.func,
-//   changeDescription: PropTypes.func,
-//   comments: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       author: PropTypes.string,
-//       cardId: PropTypes.string,
-//       id: PropTypes.string,
-//       value: PropTypes.string,
-//     }),
-//   ),
-//   addComment: PropTypes.func,
-//   deleteComment: PropTypes.func,
-//   changeComment: PropTypes.func,
-// };
+CardPopup.propTypes = {
+  user: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
+  cardAuthor: PropTypes.string.isRequired,
+  cardId: PropTypes.string.isRequired,
+  cardDescription: PropTypes.string,
+  onCloseBtnClick: PropTypes.func.isRequired,
+  renameCard: PropTypes.func.isRequired,
+  changeDescription: PropTypes.func.isRequired,
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      author: PropTypes.string,
+      cardId: PropTypes.string,
+      id: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  ),
+};
 
 const mapStateToProps = state => {
   return {
-    cards: state.cards,
+    user: state.currentUser,
   };
 };
 

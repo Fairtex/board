@@ -1,6 +1,6 @@
 import { AUTH_ENTER, NO_AUTH_ENTER, USER_EXIT } from '../actionTypes';
 
-export function authorization(state = '', { type, payload }) {
+export function currentUser(state = '', { type, payload }) {
   switch (type) {
     case AUTH_ENTER: {
       const authState = payload.user;

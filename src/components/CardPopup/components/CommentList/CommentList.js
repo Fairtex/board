@@ -5,16 +5,13 @@ import Comment from '../Comment';
 
 import './commentList.css';
 
-const CommentList = ({ user, comments, cardId, deleteComment, changeComment }) => {
-  const currComments = comments.filter(el => el.cardId === cardId);
-
+const CommentList = ({ comments, deleteComment, changeComment }) => {
   return (
     <ul className="comments__list">
-      {currComments.map(item => {
+      {comments.map(item => {
         const { id, value, author } = item;
         return (
           <Comment
-            user={user}
             key={id}
             commId={id}
             commAuthor={author}
@@ -31,8 +28,6 @@ const CommentList = ({ user, comments, cardId, deleteComment, changeComment }) =
 export default CommentList;
 
 CommentList.propTypes = {
-  user: PropTypes.string,
-  cardId: PropTypes.string.isRequired,
   comments: PropTypes.arrayOf(
     PropTypes.shape({
       author: PropTypes.string,
@@ -41,6 +36,6 @@ CommentList.propTypes = {
       value: PropTypes.string,
     }),
   ).isRequired,
-  onDelete: PropTypes.func,
-  onChangeClick: PropTypes.func,
+  deleteComment: PropTypes.func.isRequired,
+  changeComment: PropTypes.func.isRequired,
 };

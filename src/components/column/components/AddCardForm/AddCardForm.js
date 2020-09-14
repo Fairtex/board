@@ -17,9 +17,14 @@ export default class AddCardForm extends React.Component {
 
   handleAddCard = e => {
     e.preventDefault();
-    const { onSubmit } = this.props;
-    onSubmit(this.newCardName);
-    this.newCardRef.current.value = '';
+    if (this.newCardName) {
+      const { onSubmit } = this.props;
+      onSubmit(this.newCardName);
+      this.newCardRef.current.value = '';
+      this.newCardName = '';
+    } else {
+      console.log('Enter card name!');
+    }
   };
 
   render() {

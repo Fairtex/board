@@ -1,12 +1,13 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { v1 as uuid } from 'uuid';
 
 import { addCard } from '../../store/actions/cardAction';
 import { renameColumn } from '../../store/actions/columnAction';
+import getCardsByColumn from '../../store/selectors/getCardsByColumn';
 import AddCardForm from './components/AddCardForm';
 import CardList from './components/CardList';
 import ColumnNameField from './components/ColumnNameField';
@@ -27,20 +28,7 @@ class Column extends React.Component {
   };
 
   render() {
-    const {
-      user,
-      columnId,
-      name,
-      cards,
-      comments,
-      deleteCard,
-      changeCardName,
-      changeDescription,
-      addComment,
-      deleteComment,
-      changeComment,
-      renameColumn,
-    } = this.props;
+    const { cards, name, columnId, renameColumn } = this.props;
     return (
       <div className="column col">
         <ColumnNameField
@@ -48,58 +36,34 @@ class Column extends React.Component {
           columnId={columnId}
           changeColumnName={renameColumn}
         />
-        <CardList
-          user={user}
-          cards={cards}
-          comments={comments}
-          onDeleteCard={deleteCard}
-          columnId={columnId}
-          changeCardName={changeCardName}
-          changeDescription={changeDescription}
-          addComment={addComment}
-          deleteComment={deleteComment}
-          changeComment={changeComment}
-        />
+        <CardList cards={cards} />
         <AddCardForm onSubmit={this.handleAddCard} />
       </div>
     );
   }
 }
 
-// Column.propTypes = {
-//   user: PropTypes.string,
-//   columnId: PropTypes.string,
-//   name: PropTypes.string,
-//   cards: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       value: PropTypes.string,
-//       author: PropTypes.string,
-//       columnId: PropTypes.string,
-//       id: PropTypes.string,
-//       description: PropTypes.string,
-//     }),
-//   ),
-//   comments: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       author: PropTypes.string,
-//       cardId: PropTypes.string,
-//       id: PropTypes.string,
-//       value: PropTypes.string,
-//     }),
-//   ),
-//   changeColumnName: PropTypes.func.isRequired,
-//   addCard: PropTypes.func.isRequired,
-//   deleteCard: PropTypes.func,
-//   changeCardName: PropTypes.func,
-//   changeDescription: PropTypes.func,
-//   addComment: PropTypes.func,
-//   deleteComment: PropTypes.func,
-//   changeComment: PropTypes.func,
-// };
+Column.propTypes = {
+  user: PropTypes.string,
+  columnId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  cards: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      author: PropTypes.string,
+      columnId: PropTypes.string,
+      id: PropTypes.string,
+      description: PropTypes.string,
+    }),
+  ),
+  renameColumn: PropTypes.func.isRequired,
+  addCard: PropTypes.func.isRequired,
+};
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
   return {
-    cards: state.cards,
+    cards: getCardsByColumn(state, props.columnId),
+    user: state.currentUser,
   };
 };
 

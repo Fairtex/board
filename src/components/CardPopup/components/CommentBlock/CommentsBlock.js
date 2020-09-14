@@ -1,5 +1,6 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { v1 as uuid } from 'uuid';
@@ -26,31 +27,32 @@ class CommentsBlock extends React.Component {
     this.commentText = e.target.value;
   };
 
-  handleAddCard = e => {
+  handleAddComment = e => {
     e.preventDefault();
     if (this.commentText) {
-      const { cardId, addComment } = this.props;
+      const { user, cardId, addComment } = this.props;
       const newComm = {
         id: uuid(),
         cardId: cardId,
-        author: localStorage.getItem('user') || 'guest',
+        author: user,
         value: this.commentText,
       };
       addComment(newComm);
       this.addCommRef.current.value = '';
+      this.commentText = '';
     } else {
       console.log('Enter comment text!');
     }
   };
 
   render() {
-    const { user, cardId, comments, deleteComment, changeComment } = this.props;
+    const { comments, deleteComment, changeComment } = this.props;
     return (
       <div className="comments">
         <div className="comments__title">
           <i className="fa fa-list"></i> Comments
         </div>
-        <form className="comments__form" onSubmit={this.handleAddCard}>
+        <form className="comments__form" onSubmit={this.handleAddComment}>
           <textarea
             className="comments__textarea"
             rows="2"
@@ -63,8 +65,6 @@ class CommentsBlock extends React.Component {
           </button>
         </form>
         <CommentList
-          user={user}
-          cardId={cardId}
           comments={comments}
           deleteComment={deleteComment}
           changeComment={changeComment}
@@ -77,6 +77,7 @@ class CommentsBlock extends React.Component {
 const mapStateToProps = (state, props) => {
   return {
     comments: getCommentsByCard(state, props.cardId),
+    user: state.currentUser,
   };
 };
 
@@ -93,18 +94,17 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentsBlock);
 
-// CommentsBlock.propTypes = {
-//   user: PropTypes.string,
-//   comments: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       author: PropTypes.string,
-//       cardId: PropTypes.string,
-//       id: PropTypes.string,
-//       value: PropTypes.string,
-//     }),
-//   ),
-//   cardId: PropTypes.string.isRequired,
-//   addComment: PropTypes.func,
-//   deleteComment: PropTypes.func,
-//   changeComment: PropTypes.func,
-// };
+CommentsBlock.propTypes = {
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      author: PropTypes.string,
+      cardId: PropTypes.string,
+      id: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  ),
+  cardId: PropTypes.string.isRequired,
+  addComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
+  changeComment: PropTypes.func.isRequired,
+};

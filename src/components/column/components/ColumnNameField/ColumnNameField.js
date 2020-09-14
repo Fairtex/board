@@ -1,55 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-// import PropTypes from 'prop-types';
 import ChangeInput from '../../../UIKit/ChangeInput';
 
 import './columnNameField.css';
 
-export default class ColumnNameField extends React.Component {
-  constructor(props) {
-    super(props);
+const ColumnNameField = ({ name, columnId, changeColumnName }) => {
+  const [isColumnNameChanged, setColumnNameChanged] = useState(false);
 
-    this.state = {
-      isColumnNameChanged: false,
-    };
-  }
-
-  toggleChangeNameForm = () => {
-    this.setState(state => ({
-      isColumnNameChanged: !state.isColumnNameChanged,
-    }));
+  const toggleChangeNameForm = () => {
+    setColumnNameChanged(prev => !prev);
   };
 
-  changeColumnName = (id, name) => {
-    const { changeColumnName } = this.props;
+  const renameColumn = (id, name) => {
     changeColumnName(id, name);
-    this.toggleChangeNameForm();
+    toggleChangeNameForm();
   };
 
-  render() {
-    const { isColumnNameChanged } = this.state;
-    const { name, columnId } = this.props;
-    return (
-      <div className="column__title">
-        {!isColumnNameChanged ? (
-          <h3 className="column__title--point" onClick={this.toggleChangeNameForm}>
-            {name}
-          </h3>
-        ) : (
-          <ChangeInput
-            defaultValue={name}
-            targetId={columnId}
-            onChange={this.toggleChangeNameForm}
-            onEnter={this.changeColumnName}
-          />
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="column__title">
+      {!isColumnNameChanged ? (
+        <h3 className="column__title--point" onClick={toggleChangeNameForm}>
+          {name}
+        </h3>
+      ) : (
+        <ChangeInput
+          defaultValue={name}
+          targetId={columnId}
+          onChange={toggleChangeNameForm}
+          onEnter={renameColumn}
+        />
+      )}
+    </div>
+  );
+};
 
-// ColumnNameField.propTypes = {
-//   changeColumnName: PropTypes.func.isRequired,
-//   name: PropTypes.string.isRequired,
-//   columnId: PropTypes.string.isRequired,
-// };
+ColumnNameField.propTypes = {
+  changeColumnName: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  columnId: PropTypes.string.isRequired,
+};
+
+export default ColumnNameField;
